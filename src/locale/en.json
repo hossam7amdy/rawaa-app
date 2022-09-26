@@ -1,0 +1,13 @@
+{
+  "navbar": {
+    "search": {
+      "placeholder": "how can I help you?"
+    },
+    "menu": {
+      "buttonText": "Hi, ",
+      "list": ["Profile", "My Orders", "Favorite"],
+      "logout": "Logout"
+    },
+    "cartButton": "Your Cart"
+  }
+}
