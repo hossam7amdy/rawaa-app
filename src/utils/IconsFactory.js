@@ -1,6 +1,9 @@
 import { Icon } from '@chakra-ui/react';
+import { HiShoppingCart, HiPhone } from 'react-icons/hi';
 import { BsSearch, BsChevronDown } from 'react-icons/bs';
-import { HiShoppingCart } from 'react-icons/hi';
+import { FaFacebook, FaWhatsapp } from 'react-icons/fa';
+import { GrView, GrAndroid, GrMapLocation } from 'react-icons/gr';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 const Logo = props => (
   <Icon width="200" viewBox="0 0 180 80" {...props} fill="currentColor">
@@ -40,9 +43,17 @@ const Logo = props => (
 const getIcon = (name, config) => {
   const mapNameToIcon = Object.freeze({
     logo: <Logo {...config} />,
+    view: <Icon {...config} as={GrView} />,
+    phone: <Icon {...config} as={HiPhone} />,
     search: <Icon {...config} as={BsSearch} />,
+    android: <Icon {...config} as={GrAndroid} />,
     cart: <Icon {...config} as={HiShoppingCart} />,
-    dropdownMenu: <Icon as={BsChevronDown} />,
+    facebook: <Icon {...config} as={FaFacebook} />,
+    whatsapp: <Icon {...config} as={FaWhatsapp} />,
+    location: <Icon {...config} as={GrMapLocation} />,
+    dropdownMenu: <Icon {...config} as={BsChevronDown} />,
+    arrowLeft: <Icon {...config} as={MdKeyboardArrowLeft} />,
+    arrowRight: <Icon {...config} as={MdKeyboardArrowRight} />,
   });
 
   return mapNameToIcon[name];
