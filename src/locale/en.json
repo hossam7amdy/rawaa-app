@@ -1,5 +1,5 @@
 {
-  "navbar": {
+  "header": {
     "search": {
       "placeholder": "how can I help you?"
     },
@@ -9,5 +9,33 @@
       "logout": "Logout"
     },
     "cartButton": "Your Cart"
+  },
+  "nav": [
+    "category",
+    "category",
+    "category",
+    "category",
+    "category",
+    "category",
+    "category",
+    "category",
+    "category"
+  ],
+  "home": {
+    "ourMenu": { "title": "Our Menu" },
+    "mostOrdered": "Most Ordered"
+  },
+  "footer": {
+    "motto": "Rawaa for healthy food",
+    "CR-No": "CR No.",
+    "VAT-No": "VAT No.",
+    "onYourMobile": "ORDER ON THE GO",
+    "explore": "Explore Rawaa",
+    "ourPromise": "Our Promise",
+    "about-us": "About Us",
+    "policy": "Privacy Policy",
+    "conditions": "Terms & Conditions",
+    "contact-us": "CONTACT WITH US",
+    "locations": "Locations"
   }
 }
