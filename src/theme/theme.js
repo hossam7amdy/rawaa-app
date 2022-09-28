@@ -65,11 +65,11 @@ const theme = extendTheme(
       heading: `Cairo, ${base.fonts?.heading}`,
       body: `Inter, ${base.fonts?.body}`,
     },
+
     components: {
       Button: {
         variants: {
           brand: props => ({
-            rounded: 'none',
             ...brandRing,
             color: mode('gray.900', 'gray.800')(props),
             backgroundColor: mode('brand.400', 'brand.200')(props),

@@ -12,15 +12,15 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../context/auth';
 import { getIconByName } from '../../utils/IconsFactory';
 
-export const HeaderMenuList = () => {
+export const NavMenuList = () => {
   const { token } = useContext(AuthContext);
-  const { menu } = token.translation.navbar;
+  const { menu } = token.translation.header;
   const icon = getIconByName('dropdownMenu');
 
   return (
     <Menu isLazy>
       <MenuButton as={Button} variant="brand" rounded="md" rightIcon={icon}>
-        <Text fontSize="sm">{`${menu.buttonText} حسام`}</Text>
+        <Text fontSize="sm">{`${menu.buttonText} Hossam`}</Text>
       </MenuButton>
       <MenuList>
         {menu.list.map((item, idx) => (

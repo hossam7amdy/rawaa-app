@@ -14,6 +14,7 @@ export const LaguageSwitcher = () => {
         rounded="lg"
         bg="brand.600"
         color="current"
+        fontSize="10px"
         colorScheme="brand"
         isActive={!isArabic}
         _hover={{ backgroundColor: 'brand.500' }}
@@ -27,6 +28,7 @@ export const LaguageSwitcher = () => {
         rounded="lg"
         bg="brand.600"
         color="current"
+        fontSize="10px"
         colorScheme="brand"
         isActive={isArabic}
         _hover={{ backgroundColor: 'brand.500' }}

@@ -12,7 +12,7 @@ import { getIconByName } from '../../utils/IconsFactory';
 export const SearchBox = () => {
   const { token } = useContext(AuthContext);
   const isArabic = token.locale === 'ar-EG';
-  const { navbar } = token.translation;
+  const { header } = token.translation;
 
   return (
     <InputGroup>
@@ -27,7 +27,7 @@ export const SearchBox = () => {
         rounded="md"
         type="search"
         name="search"
-        placeholder={navbar.search.placeholder}
+        placeholder={header.search.placeholder}
       />
       {isArabic && (
         <InputRightElement
