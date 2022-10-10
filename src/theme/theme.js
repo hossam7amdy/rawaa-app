@@ -20,7 +20,7 @@ const inputSelectStyles = {
   sizes: {
     md: {
       field: {
-        borderRadius: 'none',
+        // borderRadius: 'none',
       },
     },
   },
@@ -89,7 +89,15 @@ const theme = extendTheme(
       Checkbox: {
         baseStyle: {
           control: {
-            borderRadius: 'none',
+            borderRadius: 'md',
+            ...brandRing,
+          },
+        },
+      },
+      Radio: {
+        baseStyle: {
+          control: {
+            borderRadius: 'md',
             ...brandRing,
           },
         },

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
 import { getIconByName } from '../../utils/IconsFactory';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../context/AuthContext';
 import { Heading } from '@chakra-ui/react';
 
 export const Logo = () => {
@@ -10,7 +10,7 @@ export const Logo = () => {
   const isArabic = token.locale === 'ar-EG';
 
   return (
-    <Link href="/">
+    <Link to="/">
       {isArabic ? (
         getIconByName('logo', { h: '40px' })
       ) : (

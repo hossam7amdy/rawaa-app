@@ -1,6 +1,6 @@
 import { Icon } from '@chakra-ui/react';
 import { HiShoppingCart, HiPhone } from 'react-icons/hi';
-import { BsSearch, BsChevronDown } from 'react-icons/bs';
+import { BsSearch, BsChevronDown, BsHeart } from 'react-icons/bs';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa';
 import { GrView, GrAndroid, GrMapLocation } from 'react-icons/gr';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
@@ -46,6 +46,7 @@ const getIcon = (name, config) => {
     view: <Icon {...config} as={GrView} />,
     phone: <Icon {...config} as={HiPhone} />,
     search: <Icon {...config} as={BsSearch} />,
+    favorite: <Icon {...config} as={BsHeart} />,
     android: <Icon {...config} as={GrAndroid} />,
     cart: <Icon {...config} as={HiShoppingCart} />,
     facebook: <Icon {...config} as={FaFacebook} />,
