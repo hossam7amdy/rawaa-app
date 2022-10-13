@@ -11,8 +11,11 @@ import {
 import { useEffect, useState } from 'react';
 
 // images
-import hero from '../../assets/hero.png';
-import appScreen from '../../assets/app-screen-1.png';
+import slide1 from '../../assets/slide-1.png';
+import slide2 from '../../assets/slide-2.png';
+import slide3 from '../../assets/slide-3.jpg';
+import slide4 from '../../assets/slide-4.jpg';
+import slide5 from '../../assets/slide-5.jpg';
 
 import { getIconByName } from '../../utils/IconsFactory';
 import { AndroidBadge } from '../../components/UI/AndroidBadge';
@@ -20,7 +23,7 @@ import { AndroidBadge } from '../../components/UI/AndroidBadge';
 const slidesData = [
   {
     id: 1,
-    img: hero,
+    img: slide1,
     title: 'A healthy meal delivered to your door, every single day',
     desc: 'The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.',
     btn: (
@@ -31,14 +34,28 @@ const slidesData = [
   },
   {
     id: 2,
-    img: appScreen,
+    img: slide2,
     title: 'On the Go',
     desc: 'The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.',
     btn: <AndroidBadge w="250px" opacity="85%" />,
   },
   {
     id: 3,
-    img: hero,
+    img: slide3,
+    title: '',
+    desc: '',
+    btn: '',
+  },
+  {
+    id: 4,
+    img: slide4,
+    title: '',
+    desc: '',
+    btn: '',
+  },
+  {
+    id: 5,
+    img: slide5,
     title: '',
     desc: '',
     btn: '',
@@ -48,11 +65,13 @@ const slidesData = [
 export const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
 
+  const slideSize = slidesData.length - 1;
+
   function btnClickHandler(direction) {
     if (direction === 'left') {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slideSize);
     } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      setSlideIndex(slideIndex < slideSize ? slideIndex + 1 : 0);
     }
   }
 
@@ -97,7 +116,7 @@ export const Slider = () => {
           <Flex w="100vw" key={item.id}>
             <Flex flex={1} justify="center" align="center">
               <Image
-                h="90%"
+                h="95vh"
                 rounded="md"
                 loading="lazy"
                 src={item.img}
@@ -105,13 +124,15 @@ export const Slider = () => {
                 fallbackSrc="https://via.placeholder.com/150"
               />
             </Flex>
-            <VStack flex={1} justify="center" spacing={10} pr={20}>
-              <Heading size="3xl" letterSpacing={-0.5}>
-                {item.title}
-              </Heading>
-              <Text fontSize="xl">{item.desc}</Text>
-              <HStack>{item.btn}</HStack>
-            </VStack>
+            {item.title && (
+              <VStack flex={1} justify="center" spacing={10} pr={20}>
+                <Heading size="3xl" letterSpacing={-0.5}>
+                  {item.title}
+                </Heading>
+                <Text fontSize="xl">{item.desc}</Text>
+                <HStack>{item.btn}</HStack>
+              </VStack>
+            )}
           </Flex>
         ))}
       </Flex>
