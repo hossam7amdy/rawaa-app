@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { Button, Heading, HStack, IconButton, VStack } from '@chakra-ui/react';
 
+import { Icon } from '../../UI/Icons';
 import { AuthContext } from '../../../context/AuthContext';
-import { getIconByName } from '../../../utils/IconsFactory';
 
 export const ComunicationSection = () => {
   const { token } = useContext(AuthContext);
@@ -13,7 +13,7 @@ export const ComunicationSection = () => {
       <Button
         fontSize="xl"
         variant="unstyled"
-        leftIcon={getIconByName('location')}
+        leftIcon={<Icon name="location" />}
         _hover={{
           opacity: '70%',
           transition: 'opacity 250ms ease-in-out 0s',
@@ -31,7 +31,7 @@ export const ComunicationSection = () => {
               opacity: '70%',
               transition: 'opacity 250ms ease-in-out 0s',
             }}
-            children={getIconByName('phone', { boxSize: '24px' })}
+            children={<Icon name="phone" boxSize={6} />}
           />
           <IconButton
             variant="unstyled"
@@ -39,7 +39,7 @@ export const ComunicationSection = () => {
               opacity: '70%',
               transition: 'opacity 250ms ease-in-out 0s',
             }}
-            children={getIconByName('facebook', { boxSize: '24px' })}
+            children={<Icon name="facebook" boxSize={6} />}
           />
           <IconButton
             variant="unstyled"
@@ -47,7 +47,7 @@ export const ComunicationSection = () => {
               opacity: '70%',
               transition: 'opacity 250ms ease-in-out 0s',
             }}
-            children={getIconByName('whatsapp', { boxSize: '24px' })}
+            children={<Icon name="whatsapp" boxSize={6} />}
           />
         </HStack>
       </VStack>

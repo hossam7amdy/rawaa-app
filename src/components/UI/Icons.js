@@ -1,12 +1,12 @@
-import { Icon } from '@chakra-ui/react';
-import { HiShoppingCart, HiPhone } from 'react-icons/hi';
-import { BsSearch, BsChevronDown, BsHeart } from 'react-icons/bs';
+import { Icon as ChakraIcon } from '@chakra-ui/react';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa';
+import { HiShoppingCart, HiPhone } from 'react-icons/hi';
+import { BsSearch, BsChevronDown, BsHeart, BsHeartFill } from 'react-icons/bs';
 import { GrView, GrAndroid, GrMapLocation } from 'react-icons/gr';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 const Logo = props => (
-  <Icon width="200" viewBox="0 0 180 80" {...props} fill="currentColor">
+  <ChakraIcon width="200" viewBox="0 0 180 80" h="40px" fill="currentColor">
     <g
       id="Group_7"
       data-name="Group 7"
@@ -37,29 +37,26 @@ const Logo = props => (
         d="M495.708,728.351a11.37,11.37,0,0,1-3.416,8.275,11.142,11.142,0,0,1-8.23,3.462,11.74,11.74,0,0,1-11.736-11.737l.183-.092a6.135,6.135,0,0,0,1.582,4.241,5.1,5.1,0,0,0,3.966,1.765,5.542,5.542,0,0,0,4.126-1.743,5.884,5.884,0,0,0,1.7-4.263V701.9q0-4.767-1.031-6.281a3.5,3.5,0,0,0-3.1-1.512h-.619a5.112,5.112,0,0,0-.986.183q.963-.366,1.972-.779a24.879,24.879,0,0,1,6.739-1.009,10.672,10.672,0,0,1,6.052,1.467q2.8,1.881,2.8,6.143Z"
       />
     </g>
-  </Icon>
+  </ChakraIcon>
 );
 
-const getIcon = (name, config) => {
-  const mapNameToIcon = Object.freeze({
-    logo: <Logo {...config} />,
-    view: <Icon {...config} as={GrView} />,
-    phone: <Icon {...config} as={HiPhone} />,
-    search: <Icon {...config} as={BsSearch} />,
-    favorite: <Icon {...config} as={BsHeart} />,
-    android: <Icon {...config} as={GrAndroid} />,
-    cart: <Icon {...config} as={HiShoppingCart} />,
-    facebook: <Icon {...config} as={FaFacebook} />,
-    whatsapp: <Icon {...config} as={FaWhatsapp} />,
-    location: <Icon {...config} as={GrMapLocation} />,
-    dropdownMenu: <Icon {...config} as={BsChevronDown} />,
-    arrowLeft: <Icon {...config} as={MdKeyboardArrowLeft} />,
-    arrowRight: <Icon {...config} as={MdKeyboardArrowRight} />,
-  });
+const getIcon = Object.freeze({
+  logo: Logo,
+  view: GrView,
+  phone: HiPhone,
+  search: BsSearch,
+  fav: BsHeart,
+  favFilled: BsHeartFill,
+  android: GrAndroid,
+  cart: HiShoppingCart,
+  facebook: FaFacebook,
+  whatsapp: FaWhatsapp,
+  location: GrMapLocation,
+  dropdownMenu: BsChevronDown,
+  arrowLeft: MdKeyboardArrowLeft,
+  arrowRight: MdKeyboardArrowRight,
+});
 
-  return mapNameToIcon[name];
-};
-
-export const getIconByName = (name, config) => {
-  return getIcon(name, config);
+export const Icon = ({ name, ...config }) => {
+  return <ChakraIcon as={getIcon[name]} {...config} />;
 };

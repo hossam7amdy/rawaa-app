@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { Text, Image, VStack, HStack, IconButton } from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
-import { getIconByName } from '../../utils/IconsFactory';
 import { CartActions } from '../../context/CartSlice';
 import { AuthContext } from '../../context/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import { PATH } from '../../data/constants';
+import { Icon } from '../../components/UI/Icons';
 
 export const MealItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -61,14 +61,14 @@ export const MealItem = ({ item }) => {
           <IconButton
             variant="brand"
             size="sm"
-            icon={getIconByName('cart')}
+            icon={<Icon name="cart" />}
             isDisabled={!isLoggedIn}
             onClick={orderSubmitHandler}
           />
           <IconButton
             variant="brand"
             size="sm"
-            icon={getIconByName('view')}
+            icon={<Icon name="view" />}
             onClick={() => navigate(`/meal/${item.title}-${item.id}`)}
           />
         </HStack>

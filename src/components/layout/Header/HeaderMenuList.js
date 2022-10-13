@@ -11,7 +11,7 @@ import {
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { getIconByName } from '../../../utils/IconsFactory';
+import { Icon } from '../../UI/Icons';
 import { AuthContext } from '../../../context/AuthContext';
 import { CartActions } from '../../../context/CartSlice';
 import { OrdersModal } from '../../orders/OrdersModal';
@@ -30,7 +30,6 @@ export const HeaderMenuList = () => {
   const { token, logout } = useContext(AuthContext);
 
   const { menu } = token.translation.header;
-  const icon = getIconByName('dropdownMenu');
   const firstName = token.user.fullName.split(' ')[0];
 
   return (
@@ -38,7 +37,12 @@ export const HeaderMenuList = () => {
       <OrdersModal isOpen={isOpen} onClose={onClose} />
       <OrdersModal isOpen={isOrdersOpen} onClose={onCloseOrders} />
       <Menu isLazy>
-        <MenuButton as={Button} variant="brand" rounded="md" rightIcon={icon}>
+        <MenuButton
+          as={Button}
+          variant="brand"
+          rounded="md"
+          rightIcon={<Icon name="dropdownMenu" />}
+        >
           <Text fontSize="sm">{`${menu.buttonText} ${firstName}`}</Text>
         </MenuButton>
         <MenuList>

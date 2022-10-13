@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { useDisclosure, Button, Flex, Text } from '@chakra-ui/react';
 
 import { AuthContext } from '../../../context/AuthContext';
-import { getIconByName } from '../../../utils/IconsFactory';
 import { SearchModal } from './SearchModal';
+import { Icon } from '../../UI/Icons';
 
 export const SearchBox = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
@@ -14,20 +14,21 @@ export const SearchBox = () => {
     <>
       <SearchModal isOpen={isOpen} onClose={onClose} />
       <Button
-        variant="ghost"
-        colorScheme="gray"
-        bg="gray.50"
-        onClick={onOpen}
         w="full"
+        bg="gray.50"
+        variant="ghost"
+        onClick={onOpen}
+        colorScheme="gray"
       >
         <Flex
-          w="full"
           gap={2}
+          w="full"
+          h="full"
           align="center"
-          fontWeight="normal"
           color="gray.500"
+          fontWeight="normal"
         >
-          <span>{getIconByName('search')}</span>
+          <Icon name="search" />
           <Text>{search.placeholder}</Text>
         </Flex>
       </Button>

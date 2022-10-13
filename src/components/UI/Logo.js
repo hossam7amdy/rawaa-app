@@ -1,18 +1,18 @@
-import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-
-import { getIconByName } from '../../utils/IconsFactory';
-import { AuthContext } from '../../context/AuthContext';
 import { Heading } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+
+import { Icon } from './Icons';
+import { AuthContext } from '../../context/AuthContext';
 
 export const Logo = () => {
-  const { token } = useContext(AuthContext);
-  const isArabic = token.locale === 'ar-EG';
+  const { lang } = useContext(AuthContext);
+  const isArabic = lang === 'ar';
 
   return (
     <Link to="/">
       {isArabic ? (
-        getIconByName('logo', { h: '40px' })
+        <Icon name="logo" />
       ) : (
         <Heading letterSpacing={-1}>RAWAA</Heading>
       )}

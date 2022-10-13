@@ -17,7 +17,7 @@ import slide3 from '../../assets/slide-3.jpg';
 import slide4 from '../../assets/slide-4.jpg';
 import slide5 from '../../assets/slide-5.jpg';
 
-import { getIconByName } from '../../utils/IconsFactory';
+import { Icon } from '../../components/UI/Icons';
 import { AndroidBadge } from '../../components/UI/AndroidBadge';
 
 const slidesData = [
@@ -104,7 +104,7 @@ export const Slider = () => {
         colorScheme="blackAlpha"
         onClick={() => btnClickHandler('left')}
       >
-        {getIconByName('arrowLeft', { boxSize: '50px' })}
+        {<Icon name="arrowLeft" boxSize={12} />}
       </IconButton>
 
       <Flex
@@ -149,7 +149,7 @@ export const Slider = () => {
         colorScheme="blackAlpha"
         onClick={() => btnClickHandler('right')}
       >
-        {getIconByName('arrowRight', { boxSize: '50px' })}
+        {<Icon name="arrowRight" boxSize={12} />}
       </IconButton>
     </Flex>
   );
