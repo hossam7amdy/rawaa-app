@@ -40,8 +40,13 @@ export const NewAddressModal = ({ isOpen, onClose }) => {
         ...values,
       },
     };
-    mutate(config);
-    actions.resetForm();
+
+    mutate(config, {
+      onSuccess: () => {
+        onClose();
+        actions.resetForm();
+      },
+    });
   };
 
   const initialValues = {

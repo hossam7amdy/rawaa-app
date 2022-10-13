@@ -12,6 +12,7 @@ export const SingleAddress = props => {
   const { deleteBtn } = token.translation;
 
   const { isLoading, mutate } = useMutateData({ key: 'address' });
+
   const deleteAddressHandler = id => {
     mutate({ method: 'delete', url: `${PATH.ADDRESS}/${id}` });
   };
@@ -35,6 +36,7 @@ export const SingleAddress = props => {
           size="xs"
           variant="link"
           color="red.500"
+          isDisabled={isActive}
           isLoading={isLoading}
           onClick={() => deleteAddressHandler(id)}
         >
