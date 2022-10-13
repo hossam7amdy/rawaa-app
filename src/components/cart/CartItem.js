@@ -27,9 +27,9 @@ export const CartItem = props => {
     const config = {
       method: 'post',
       data: {
+        ...mutateItem,
         quantity: quantity + 1,
         customerId: token.user.id,
-        ...mutateItem,
       },
     };
 
@@ -45,9 +45,9 @@ export const CartItem = props => {
       config = {
         method: 'post',
         data: {
-          quantity: mutateItem.quantity - 1,
-          customerId: token.user.id,
           ...mutateItem,
+          customerId: token.user.id,
+          quantity: mutateItem.quantity - 1,
         },
       };
     } else {

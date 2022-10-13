@@ -1,26 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Button, useToast, Stack, Spacer } from '@chakra-ui/react';
 
 import { CartPreview } from './CartPreview';
-import { AuthContext } from '../../context/AuthContext';
 import { AddressList } from './AddressList';
-import useMutateData from '../../hooks/useMutateData';
-import { useDispatch, useSelector } from 'react-redux';
+import { AuthContext } from '../../context/AuthContext';
 import { CartActions } from '../../context/CartSlice';
+import useMutateData from '../../hooks/useMutateData';
 
 export const Checkout = () => {
   const toast = useToast();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { token } = useContext(AuthContext);
+  const cart = useSelector(state => state.cart);
   const [addressId, setAddressId] = useState(null);
-  const { items, totalAmount } = useSelector(state => state.cart);
   const { isLoading: submitting, mutate } = useMutateData({ key: 'order' });
 
-  const dispatch = useDispatch();
-
-  const canPlaceOrder = !!addressId && items.length !== 0;
+  const { items, totalAmount, totalQuantity } = cart;
+  const canPlaceOrder = !!addressId && !!totalQuantity && totalAmount < 1000;
   const { actionBtn } = token.translation.checkout;
 
   const placeOrderHandler = () => {
@@ -66,8 +65,8 @@ export const Checkout = () => {
   };
 
   return (
-    <Flex w="full" h="full">
-      <Stack w="full" h="full">
+    <Flex w="full" h="full" gap={2} px={2} mt={5}>
+      <Stack flex={3} h="full">
         <AddressList onAddressId={setAddressId} />
         <Spacer />
         <Button
@@ -81,7 +80,9 @@ export const Checkout = () => {
           {actionBtn}
         </Button>
       </Stack>
-      <CartPreview />
+      <Flex flex={2} h="full">
+        <CartPreview />
+      </Flex>
     </Flex>
   );
 };

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { SIZE_PRICE_MAPPER } from '../data/constants';
 import { DISCOUNT_CALCULATOR } from '../utils/helpers';
 
@@ -11,6 +12,7 @@ const initialCartState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState: initialCartState,
+
   reducers: {
     addItemToCart(state, action) {
       const newItem = action.payload;
@@ -21,7 +23,9 @@ const cartSlice = createSlice({
       if (!exitingItem) {
         state.items.push(newItem);
       } else {
+        if (exitingItem.quantity + newItem.quantity > 15) return;
         exitingItem.quantity += newItem.quantity;
+        exitingItem.amount = exitingItem.quantity * exitingItem.price;
       }
       state.totalQuantity += newItem.quantity;
       state.totalAmount += newItem.quantity * newItem.price;
@@ -33,6 +37,7 @@ const cartSlice = createSlice({
         state.items = state.items.filter(item => item.productId !== id);
       } else {
         exitingItem.quantity--;
+        exitingItem.amount -= exitingItem.price;
       }
       state.totalQuantity--;
       state.totalAmount -= exitingItem.price;
