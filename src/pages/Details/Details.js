@@ -18,16 +18,16 @@ import {
   FormControl,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { useContext, useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
 import { PATH, SIZE_PRICE_MAPPER } from '../../data/constants';
-import { getIconByName } from '../../utils/IconsFactory';
 import { useFetchById } from '../../hooks/useFetchById';
 import { AuthContext } from '../../context/AuthContext';
 import { CartActions } from '../../context/CartSlice';
 import QuantityButton from './QuantityButton';
 import useMutateData from '../../hooks/useMutateData';
+import { Icon } from '../../components/UI/Icons';
 
 const initialState = {
   size: 1,
@@ -55,6 +55,7 @@ export const Details = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isFavorite, toggleIsFavorite] = useState(false);
   const { token, isLoggedIn, lang } = useContext(AuthContext);
   const [orderState, dispatchOrder] = useReducer(reducer, initialState);
 
@@ -200,7 +201,14 @@ export const Details = () => {
             <IconButton
               variant="outline"
               colorScheme="brand"
-              icon={getIconByName('favorite')}
+              icon={
+                isFavorite ? (
+                  <Icon name="favFilled" color="red.500" />
+                ) : (
+                  <Icon name="fav" />
+                )
+              }
+              onClick={() => toggleIsFavorite(prev => !prev)}
             />
             <Spacer />
             <Text as="b">
