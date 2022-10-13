@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Header } from './components/layout/Header/Header';
 import { Footer } from './components/layout/Footer/Footer';
@@ -19,13 +19,11 @@ import { Meals } from './pages/Meals/Meals';
 import { Home } from './pages/Home/Home';
 import { User } from './pages/User/User';
 
+let isInitial = true;
+
 export default function App() {
   const dispatch = useDispatch();
-  const qty = useSelector(state => state.cart.totalQuantity);
-  const [langIsChanged, setLangIsChanged] = useState(null);
   const { token, isLoggedIn, lang } = useContext(AuthContext);
-
-  const hasItems = qty !== 0;
 
   const { data: cartItems } = useFetchById({
     lang,
@@ -34,11 +32,16 @@ export default function App() {
   });
 
   useEffect(() => {
-    if (cartItems && lang !== langIsChanged) {
-      setLangIsChanged(lang);
+    isInitial = true;
+  }, [lang, isLoggedIn]);
+
+  useEffect(() => {
+    if (!isInitial) return;
+    if (cartItems) {
+      isInitial = false;
       dispatch(CartActions.replaceCartItems({ cartItems }));
     }
-  }, [cartItems, dispatch, langIsChanged, lang]);
+  }, [dispatch, cartItems]);
 
   return (
     <ScrollToTopWrapper>
@@ -61,7 +64,7 @@ export default function App() {
           <Route path="meal">
             <Route path=":id" element={<Details />} />
           </Route>
-          {hasItems && <Route path="checkout" element={<Checkout />} />}
+          <Route path="checkout" element={<Checkout />} />
           <Route path="not-found" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
