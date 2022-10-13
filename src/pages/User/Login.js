@@ -34,7 +34,7 @@ export const Login = () => {
         onSubmit={formSubmitHandler}
       >
         <Form onChange={() => setError(false)}>
-          <VStack spacing={4}>
+          <VStack spacing={4} w="400px">
             <CustomInput
               type="email"
               name="email"

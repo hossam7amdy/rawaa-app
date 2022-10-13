@@ -15,15 +15,18 @@ const useMutateData = ({ key }) => {
   const queryClient = useQueryClient();
 
   return useMutation(queryFn[key], {
-    onError: error =>
+    onError: error => {
+      const message = error?.response?.data.message || 'Something went wrong.';
       toast({
         title: 'Failed',
-        description: `Error Occurred: ${error.message}`,
+        description: message,
         status: 'error',
         duration: 5000,
         isClosable: true,
         position: 'top',
-      }),
+      });
+    },
+
     onSettled: () => queryClient.invalidateQueries(key),
   });
 };

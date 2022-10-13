@@ -7,7 +7,7 @@ export const PATH = Object.freeze({
   CATEGORY: 'api/client/category',
   PRODUCTS: 'api/client/Product',
   ADDRESS: 'api/client/deliveryaddress',
-  FILE: 'http://www.rawaa.somee.com/api/file/',
+  FILE: 'https://www.rawaa.somee.com/api/file/',
 });
 
 export const SIZE_PRICE_MAPPER = Object.freeze({

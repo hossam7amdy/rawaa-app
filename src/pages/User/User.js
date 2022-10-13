@@ -1,9 +1,9 @@
 import {
+  Tab,
   Tabs,
   TabList,
-  TabPanels,
-  Tab,
   TabPanel,
+  TabPanels,
   Container,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
@@ -17,8 +17,14 @@ export const User = () => {
   const { login, register } = token.translation.user;
 
   return (
-    <Container bg="gray.50" rounded="md" my={20}>
-      <Tabs isFitted colorScheme="brand" align="end">
+    <Container minW="container.lg" mt={10} rounded="md">
+      <Tabs
+        isFitted
+        rounded="md"
+        bg="gray.50"
+        variant="enclosed"
+        colorScheme="brand"
+      >
         <TabList mb="1em">
           <Tab>{login}</Tab>
           <Tab>{register}</Tab>

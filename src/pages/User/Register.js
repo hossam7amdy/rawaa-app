@@ -44,7 +44,7 @@ export const Register = () => {
         onSubmit={formSubmitHandler}
       >
         <Form>
-          <VStack spacing={4}>
+          <VStack spacing={4} w="450px">
             <CustomInput
               type="text"
               name="fullname"

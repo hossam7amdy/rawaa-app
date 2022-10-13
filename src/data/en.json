@@ -61,7 +61,7 @@
     "addressBtn": "Add New Address",
     "actionBtn": "Place Order",
     "total": "Total",
-    "items": "Item"
+    "item": "Item"
   },
   "user": {
     "login": "Login",
