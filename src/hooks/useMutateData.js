@@ -16,7 +16,7 @@ const useMutateData = ({ key }) => {
 
   return useMutation(queryFn[key], {
     onError: error => {
-      const message = error?.response?.data.message || 'Something went wrong.';
+      const message = error?.response?.data?.message || error.message;
       toast({
         title: 'Failed',
         description: message,

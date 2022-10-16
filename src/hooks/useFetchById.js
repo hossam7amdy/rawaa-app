@@ -46,7 +46,7 @@ export const useFetchById = ({ key, id, lang }) => {
   return useQuery([key, id, lang], queryFn[key], {
     enabled: Boolean(id),
     onError: error => {
-      const message = error?.response?.data.message || 'Something went wrong.';
+      const message = error?.response?.data?.message || error.message;
       toast({
         title: 'Failed',
         description: message,

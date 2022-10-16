@@ -69,7 +69,7 @@ export const OrderItem = props => {
         </Text>
         {status === 1 && (
           <Button
-            size="sm"
+            size="xs"
             variant="link"
             colorScheme="blue"
             isLoading={isDeleting}

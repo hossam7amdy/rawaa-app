@@ -15,14 +15,10 @@ import { Icon } from '../../UI/Icons';
 import { AuthContext } from '../../../context/AuthContext';
 import { CartActions } from '../../../context/CartSlice';
 import { OrdersModal } from '../../orders/OrdersModal';
+import { useNavigate } from 'react-router-dom';
 
 export const HeaderMenuList = () => {
-  // modals
-  const {
-    onOpen: onOpenOrders,
-    isOpen: isOrdersOpen,
-    onClose: onCloseOrders,
-  } = useDisclosure();
+  const navigate = useNavigate();
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   // context
@@ -35,7 +31,6 @@ export const HeaderMenuList = () => {
   return (
     <>
       <OrdersModal isOpen={isOpen} onClose={onClose} />
-      <OrdersModal isOpen={isOrdersOpen} onClose={onCloseOrders} />
       <Menu isLazy>
         <MenuButton
           as={Button}
@@ -46,8 +41,10 @@ export const HeaderMenuList = () => {
           <Text fontSize="sm">{`${menu.buttonText} ${firstName}`}</Text>
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={onOpen}>{menu.list[0]}</MenuItem>
-          <MenuItem onClick={onOpenOrders}>{menu.list[1]}</MenuItem>
+          <MenuItem onClick={() => navigate('profile')}>
+            {menu.list[0]}
+          </MenuItem>
+          <MenuItem onClick={onOpen}>{menu.list[1]}</MenuItem>
           <MenuItem>{menu.list[2]}</MenuItem>
           <MenuDivider />
           <MenuItem

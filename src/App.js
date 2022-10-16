@@ -14,6 +14,7 @@ import { ScrollToTopWrapper } from './components/UI/ScrollToTopWrapper';
 import { CartActions } from './context/CartSlice';
 import { Checkout } from './pages/Checkout/Checkout';
 import { NotFound } from './pages/NotFound';
+import { Profile } from './pages/Profile/Profile';
 import { Details } from './pages/Details/Details';
 import { Meals } from './pages/Meals/Meals';
 import { Home } from './pages/Home/Home';
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="meal">
             <Route path=":id" element={<Details />} />
           </Route>
+          <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="not-found" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
