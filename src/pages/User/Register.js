@@ -1,21 +1,21 @@
-import { Formik, Form } from 'formik';
 import { useContext } from 'react';
+import { Formik, Form } from 'formik';
 import { VStack, Button, useToast } from '@chakra-ui/react';
 
 import {
   PHONE_NUMBER,
+  VALIDATE_TEXT,
   VALIDATE_EMAIL,
   VALIDATE_PASSWORD,
-  VALIDATE_TEXT,
 } from '../../utils/validations';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
-import { AuthContext } from '../../context/AuthContext';
 import CustomInput from '../../components/form/CustomInput';
 
 export const Register = () => {
   const toast = useToast();
   const { token } = useContext(AuthContext);
-  const { isLoading, mutate } = useMutateData({ key: 'user' });
+  const { isLoading, request } = useMutateData({ key: 'user' });
   const { fullname, phone, email, password, register } = token.translation.user;
 
   const formSubmitHandler = (enteredValues, actions) => {
@@ -23,20 +23,19 @@ export const Register = () => {
       method: 'post',
       data: enteredValues,
     };
-    mutate(config, {
-      onSuccess: () => {
-        actions.resetForm();
-        toast({
-          title: 'Success',
-          description: "We've created an account for you. Happy eating",
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
-      },
+    request(config).then(() => {
+      toast({
+        title: 'Success',
+        description: "We've created an account for you.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+      actions.resetForm();
     });
   };
+
   return (
     <VStack w="full">
       <Formik
