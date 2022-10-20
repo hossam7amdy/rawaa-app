@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Text, Image, VStack, HStack, IconButton } from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
-import { CartActions } from '../../context/CartSlice';
-import { AuthContext } from '../../context/AuthContext';
+import { CartActions } from '../../store/CartSlice';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import { PATH } from '../../data/constants';
 import { Icon } from '../../components/UI/Icons';
@@ -13,7 +13,7 @@ import { Icon } from '../../components/UI/Icons';
 export const MealItem = ({ item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { mutate } = useMutateData({ key: 'cart' });
+  const { request } = useMutateData({ key: 'cart' });
   const { token, isLoggedIn } = useContext(AuthContext);
   const { locale } = token;
   const isArabic = locale === 'ar-EG';
@@ -36,7 +36,7 @@ export const MealItem = ({ item }) => {
       customerId: token.user.id,
     };
 
-    mutate({ method: 'post', data });
+    request({ method: 'post', data });
     dispatch(CartActions.addItemToCart(data));
   };
 

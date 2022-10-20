@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import {
   CURRENCY_FORMATER,
   DATE_FORMATER,

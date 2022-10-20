@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Flex, List, Button, Heading, ListItem } from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER } from '../../utils/helpers';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import { CartItem } from './CartItem';
 import { Modal } from '../UI/Modal';
 

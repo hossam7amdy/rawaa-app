@@ -7,16 +7,19 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { NewAddressModal } from './NewAddressModal';
+import { AddressActions } from '../../store/AddressSlice';
 import { SingleAddress } from './SingleAddress';
 import { useFetchById } from '../../hooks/useFetchById';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 
 export const AddressList = ({ onAddressId }) => {
+  const dispatch = useDispatch();
   const [addressId, setAddressId] = useState(null);
-  const [addressList, setAddressList] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { addressList } = useSelector(state => state.address);
 
   const { lang, token } = useContext(AuthContext);
   const { isLoading, data } = useFetchById({
@@ -27,11 +30,16 @@ export const AddressList = ({ onAddressId }) => {
 
   useEffect(() => {
     if (data) {
-      setAddressList(data);
-      onAddressId(data[0].id);
-      setAddressId(data[0].id);
+      dispatch(AddressActions.replaceAddressList(data));
     }
-  }, [data, onAddressId, setAddressId]);
+  }, [dispatch, data, addressList]);
+
+  useEffect(() => {
+    if (addressList.length !== 0) {
+      onAddressId(addressList[0].id);
+      setAddressId(addressList[0].id);
+    }
+  }, [addressList, onAddressId]);
 
   const setAddressIdHandler = id => {
     onAddressId(id);
@@ -53,7 +61,7 @@ export const AddressList = ({ onAddressId }) => {
             fadeDuration={1}
             isLoaded={!isLoading}
           >
-            {addressList?.map(address => (
+            {addressList.map(address => (
               <SingleAddress
                 id={address.id}
                 key={address.id}

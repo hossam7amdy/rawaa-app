@@ -5,8 +5,8 @@ import { Text, List, Stack, HStack, Heading, Divider } from '@chakra-ui/react';
 import { CURRENCY_FORMATER, NUMBER_FORMATER } from '../../utils/helpers';
 import { SkeletonCart } from '../../components/UI/SkeletonCart';
 import { useFetchById } from '../../hooks/useFetchById';
-import { AuthContext } from '../../context/AuthContext';
-import { CartActions } from '../../context/CartSlice';
+import { AuthContext } from '../../store/AuthContext';
+import { CartActions } from '../../store/CartSlice';
 import { SingleItem } from './SingleItem';
 import { PATH } from '../../data/constants';
 
@@ -23,7 +23,7 @@ export const CartPreview = () => {
 
   useEffect(() => {
     if (cartItems) {
-      dispatch(CartActions.replaceCartItems({ cartItems }));
+      dispatch(CartActions.replaceCartItems(cartItems));
     }
   }, [cartItems, dispatch]);
 

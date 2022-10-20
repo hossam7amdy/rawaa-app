@@ -23,8 +23,8 @@ import { useContext, useEffect, useReducer, useState } from 'react';
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
 import { PATH, SIZE_PRICE_MAPPER } from '../../data/constants';
 import { useFetchById } from '../../hooks/useFetchById';
-import { AuthContext } from '../../context/AuthContext';
-import { CartActions } from '../../context/CartSlice';
+import { AuthContext } from '../../store/AuthContext';
+import { CartActions } from '../../store/CartSlice';
 import QuantityButton from './QuantityButton';
 import useMutateData from '../../hooks/useMutateData';
 import { Icon } from '../../components/UI/Icons';
@@ -63,7 +63,7 @@ export const Details = () => {
   const translation = token.translation.productDetails;
   const productId = id.split('-')[1];
 
-  const { mutate } = useMutateData({ key: 'cart' });
+  const { request } = useMutateData({ key: 'cart' });
   const {
     isError,
     isLoading,
@@ -110,7 +110,7 @@ export const Details = () => {
     dispatch(CartActions.addItemToCart(itemData));
 
     const config = { method: 'post', data: itemData };
-    mutate(config);
+    request(config);
   };
 
   return (

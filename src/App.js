@@ -7,11 +7,11 @@ import { Header } from './components/layout/Header/Header';
 import { Footer } from './components/layout/Footer/Footer';
 
 import { useFetchById } from './hooks/useFetchById';
-import { AuthContext } from './context/AuthContext';
+import { AuthContext } from './store/AuthContext';
 
 import { ScrollToTopWrapper } from './components/UI/ScrollToTopWrapper';
 
-import { CartActions } from './context/CartSlice';
+import { CartActions } from './store/CartSlice';
 import { Checkout } from './pages/Checkout/Checkout';
 import { NotFound } from './pages/NotFound';
 import { Profile } from './pages/Profile/Profile';
@@ -20,29 +20,16 @@ import { Meals } from './pages/Meals/Meals';
 import { Home } from './pages/Home/Home';
 import { User } from './pages/User/User';
 
-let isInitial = true;
-
 export default function App() {
   const dispatch = useDispatch();
   const { token, isLoggedIn, lang } = useContext(AuthContext);
-
-  const { data: cartItems } = useFetchById({
-    lang,
-    key: 'cart',
-    id: token.user?.id,
-  });
+  const { data } = useFetchById({ lang, key: 'cart', id: token.user?.id });
 
   useEffect(() => {
-    isInitial = true;
-  }, [lang, isLoggedIn]);
-
-  useEffect(() => {
-    if (!isInitial) return;
-    if (cartItems) {
-      isInitial = false;
-      dispatch(CartActions.replaceCartItems({ cartItems }));
+    if (data) {
+      dispatch(CartActions.replaceCartItems(data));
     }
-  }, [dispatch, cartItems]);
+  }, [dispatch, data]);
 
   return (
     <ScrollToTopWrapper>
@@ -50,7 +37,7 @@ export default function App() {
       <Container
         as="main"
         p={0}
-        my="60px"
+        my="70px"
         minW="full"
         minH="100vh"
         overflowX="hidden"

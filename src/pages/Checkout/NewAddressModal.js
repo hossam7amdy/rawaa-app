@@ -9,15 +9,18 @@ import { useContext } from 'react';
 import { Formik, Form } from 'formik';
 
 import { RANGE_NUMBER, VALIDATE_TEXT } from '../../utils/validations';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import CustomInput from '../../components/form/CustomInput';
 import { Modal } from '../../components/UI/Modal';
+import { AddressActions } from '../../store/AddressSlice';
+import { useDispatch } from 'react-redux';
 
 export const NewAddressModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const { token } = useContext(AuthContext);
   const colSpan = useBreakpointValue({ base: 2, md: 1 });
-  const { isLoading, mutate } = useMutateData({ key: 'address' });
+  const { isLoading, request } = useMutateData({ key: 'address' });
 
   const {
     city,
@@ -41,11 +44,10 @@ export const NewAddressModal = ({ isOpen, onClose }) => {
       },
     };
 
-    mutate(config, {
-      onSuccess: () => {
-        onClose();
-        actions.resetForm();
-      },
+    request(config).then(data => {
+      onClose();
+      actions.resetForm();
+      dispatch(AddressActions.addAddressToList(data));
     });
   };
 

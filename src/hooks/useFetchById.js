@@ -1,70 +1,78 @@
 import { useToast } from '@chakra-ui/react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useEffect, useState } from 'react';
 
-import { request } from '../utils/axios-utils';
+import { client } from '../utils/axios-utils';
 import { PATH } from '../data/constants';
 
 const queryFn = Object.freeze({
-  orders: ({ queryKey }) => {
-    const [, id, lang] = queryKey;
-    return request({ url: `${lang}/${PATH.ORDER}/all/${id}` }); // useId
+  orders: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.ORDER}/all/${id}` }); // useId
   },
-  order: ({ queryKey }) => {
-    const [, id, lang] = queryKey;
-    return request({ url: `${lang}/${PATH.ORDER}/${id}` }); // orderId
+  order: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.ORDER}/${id}` }); // orderId
   },
 
-  products: ({ queryKey }) => {
-    const [, id, lang] = queryKey;
-    return request({ url: `${lang}/${PATH.PRODUCTS}/all/${id}` }); // userId
+  products: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.PRODUCTS}/all/${id}` }); // userId
   },
-  product: ({ queryKey }) => {
-    const [, id, lang] = queryKey;
-    return request({ url: `${lang}/${PATH.PRODUCTS}/${id}` }); // productId
+  product: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.PRODUCTS}/${id}` }); // productId
   },
 
-  search: ({ queryKey }) => {
-    const [, id, lang] = queryKey;
-    return request({ url: `${lang}/${PATH.SEARCH}/${id}` });
+  search: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.SEARCH}/${id}` });
   },
 
-  address: ({ queryKey }) => {
-    const [, id] = queryKey;
-    return request({ url: `${PATH.ADDRESS}/all/user/${id}` });
+  address: ({ id }) => {
+    return client({ url: `${PATH.ADDRESS}/all/user/${id}` });
   },
 
-  cart: ({ queryKey }) => {
-    const [, id, lang] = queryKey;
-    return request({ url: `${lang}/${PATH.CART}/all/${id}` });
+  cart: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.CART}/all/${id}` });
+  },
+
+  categories: ({ id, lang }) => {
+    return client({ url: `${lang}/${PATH.CATEGORY}/${id}` });
   },
 });
 
 export const useFetchById = ({ key, id, lang }) => {
   const toast = useToast();
-  const queryClient = useQueryClient();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  return useQuery([key, id, lang], queryFn[key], {
-    enabled: Boolean(id),
-    onError: error => {
-      const message = error?.response?.data?.message || error.message;
-      toast({
-        title: 'Failed',
-        description: message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
-    },
-    select: data => {
-      return data.data;
-    },
-    initialData: () => {
-      const data = queryClient
-        .getQueryData(key)
-        ?.data?.find(item => item.id === parseInt(id));
+  useEffect(() => {
+    if (!id) return;
 
-      return data ? data : undefined;
-    },
-  });
+    const request = async () => {
+      setIsLoading(true);
+      try {
+        const response = await queryFn[key]({ id, lang });
+        setData(response.data);
+      } catch (err) {
+        const message = err?.response?.data?.message || err.message;
+        setError(message);
+
+        toast({
+          title: 'Failed',
+          description: message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    request();
+  }, [key, id, lang, toast]);
+
+  return {
+    data,
+    error,
+    isLoading,
+  };
 };

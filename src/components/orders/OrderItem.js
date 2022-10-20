@@ -1,8 +1,10 @@
 import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Flex, Text } from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER, DATE_FORMATER } from '../../utils/helpers';
-import { AuthContext } from '../../context/AuthContext';
+import { OrdersActions } from '../../store/OrdersSlice';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import { PATH } from '../../data/constants';
 
@@ -21,8 +23,9 @@ const statusColor = {
   5: 'gray.500',
 };
 export const OrderItem = props => {
+  const dispatch = useDispatch();
   const { token, lang } = useContext(AuthContext);
-  const { isLoading: isDeleting, mutate } = useMutateData({ key: 'order' });
+  const { isLoading: isDeleting, request } = useMutateData({ key: 'order' });
 
   const { locale } = token;
   const { cancelBtn } = token.translation;
@@ -35,7 +38,9 @@ export const OrderItem = props => {
       url: `${lang}/${PATH.ORDER}/orderstatus`,
       data: { id, orderStatus: 5, customerId: token.user.id },
     };
-    mutate(config);
+    request(config).then(() => {
+      dispatch(OrdersActions.modifyOrderState(id));
+    });
   };
 
   return (

@@ -1,19 +1,29 @@
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useContext, useEffect } from 'react';
 import { Button } from '@chakra-ui/react';
 
 import { LoadingSpinner } from '../UI/LoadingSpinner';
+import { OrdersActions } from '../../store/OrdersSlice';
 import { useFetchById } from '../../hooks/useFetchById';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import { OrderItem } from './OrderItem';
 import { Modal } from '../UI/Modal';
 
 export const OrdersModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const { token, lang } = useContext(AuthContext);
-  const { isLoading, data: orders } = useFetchById({
+  const { orders } = useSelector(state => state.orders);
+  const { isLoading, data } = useFetchById({
     lang,
     key: 'orders',
     id: token.user.id,
   });
+
+  useEffect(() => {
+    if (data) {
+      dispatch(OrdersActions.replaceOrders(data));
+    }
+  }, [dispatch, data]);
 
   const { list } = token.translation.header.menu;
   const { closeBtn } = token.translation;
@@ -22,7 +32,7 @@ export const OrdersModal = ({ isOpen, onClose }) => {
   const body = isLoading ? (
     <LoadingSpinner />
   ) : (
-    orders?.map(order => (
+    orders.map(order => (
       <OrderItem
         id={order.id}
         key={order.id}

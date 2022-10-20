@@ -1,22 +1,30 @@
+import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { useMutation, useQueryClient } from 'react-query';
 
 import { PATH } from '../data/constants';
-import { request } from '../utils/axios-utils';
+import { client } from '../utils/axios-utils';
 
 const queryFn = Object.freeze({
-  cart: options => request({ url: `ar/${PATH.CART}`, ...options }),
-  user: options => request({ url: PATH.USER, ...options }),
-  order: options => request({ url: `ar/${PATH.ORDER}`, ...options }),
-  address: options => request({ url: PATH.ADDRESS, ...options }),
+  cart: options => client({ url: `ar/${PATH.CART}`, ...options }),
+  user: options => client({ url: PATH.USER, ...options }),
+  order: options => client({ url: `ar/${PATH.ORDER}`, ...options }),
+  address: options => client({ url: PATH.ADDRESS, ...options }),
 });
-const useMutateData = ({ key }) => {
-  const toast = useToast();
-  const queryClient = useQueryClient();
 
-  return useMutation(queryFn[key], {
-    onError: error => {
-      const message = error?.response?.data?.message || error.message;
+export const useMutateData = ({ key }) => {
+  const toast = useToast();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const request = async options => {
+    if (!options) return;
+
+    setIsLoading(true);
+    try {
+      const response = await queryFn[key](options);
+      return response.data;
+    } catch (err) {
+      const message = err?.response?.data?.message || err.message;
       toast({
         title: 'Failed',
         description: message,
@@ -25,10 +33,18 @@ const useMutateData = ({ key }) => {
         isClosable: true,
         position: 'top',
       });
-    },
+      setError(message);
+      throw new Error(message || 'something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    onSettled: () => queryClient.invalidateQueries(key),
-  });
+  return {
+    error,
+    isLoading,
+    request,
+  };
 };
 
 export default useMutateData;

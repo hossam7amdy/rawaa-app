@@ -2,19 +2,19 @@ import { useContext } from 'react';
 import { Button, Flex, HStack, ListItem, Text } from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER } from '../../utils/helpers';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import { PATH } from '../../data/constants';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { CartActions } from '../../context/CartSlice';
+import { CartActions } from '../../store/CartSlice';
 
 export const CartItem = props => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
 
   const { token } = useContext(AuthContext);
-  const { mutate } = useMutateData({ key: 'cart' });
+  const { request } = useMutateData({ key: 'cart' });
 
   const locale = token.locale;
   const { productId, title, quantity, price, amount, taste, itemSize } = props;
@@ -33,7 +33,9 @@ export const CartItem = props => {
       },
     };
 
-    mutate(config);
+    request(config).catch(() => {
+      dispatch(CartActions.removeItemFromCart(productId));
+    });
   };
 
   const onRemoveItemHandler = () => {
@@ -56,7 +58,9 @@ export const CartItem = props => {
         url: `ar/${PATH.CART}/${token.user.id}/${productId}`,
       };
     }
-    mutate(config);
+    request(config).catch(() => {
+      dispatch(CartActions.addItemToCart({ ...mutateItem, quantity: 1 }));
+    });
   };
 
   return (

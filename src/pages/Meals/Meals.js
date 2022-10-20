@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { Container, Flex, Skeleton } from '@chakra-ui/react';
 
 import { useFetchById } from '../../hooks/useFetchById';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import { MealItem } from './MealItem';
-import { Navbar } from '../../components/layout/Navbar';
+import { Navbar } from '../../components/layout/Navbar/Navbar';
 
 export const Meals = () => {
   const { id } = useParams();

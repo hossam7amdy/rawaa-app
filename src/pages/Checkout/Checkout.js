@@ -5,9 +5,10 @@ import { Flex, Button, useToast, Stack, Spacer } from '@chakra-ui/react';
 
 import { CartPreview } from './CartPreview';
 import { AddressList } from './AddressList';
-import { AuthContext } from '../../context/AuthContext';
-import { CartActions } from '../../context/CartSlice';
+import { AuthContext } from '../../store/AuthContext';
+import { CartActions } from '../../store/CartSlice';
 import useMutateData from '../../hooks/useMutateData';
+import { OrdersActions } from '../../store/OrdersSlice';
 
 export const Checkout = () => {
   const toast = useToast();
@@ -16,7 +17,7 @@ export const Checkout = () => {
   const { token } = useContext(AuthContext);
   const cart = useSelector(state => state.cart);
   const [addressId, setAddressId] = useState(null);
-  const { isLoading: submitting, mutate } = useMutateData({ key: 'order' });
+  const { isLoading, request } = useMutateData({ key: 'order' });
 
   const { items, totalAmount, totalQuantity } = cart;
   const canPlaceOrder = !!addressId && !!totalQuantity && totalAmount < 1000;
@@ -48,19 +49,19 @@ export const Checkout = () => {
       },
     };
 
-    mutate(config, {
-      onSuccess: () => {
-        dispatch(CartActions.clearCart());
-        toast({
-          title: 'Success',
-          description: 'order placed successfully, stay tuned',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
-        navigate('/', { replace: true });
-      },
+    request(config).then(data => {
+      dispatch(CartActions.clearCart());
+      dispatch(OrdersActions.addNewOrder(data));
+
+      toast({
+        title: 'Success',
+        description: 'order placed successfully, stay tuned',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+      navigate('/', { replace: true });
     });
   };
 
@@ -72,7 +73,7 @@ export const Checkout = () => {
         <Button
           w="full"
           variant="brand"
-          isLoading={submitting}
+          isLoading={isLoading}
           loadingText={'submitting'}
           isDisabled={!canPlaceOrder}
           onClick={placeOrderHandler}

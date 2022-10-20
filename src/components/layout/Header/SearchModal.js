@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useFetchById } from '../../../hooks/useFetchById';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 import { PATH } from '../../../data/constants';
 import { Modal } from '../../UI/Modal';
 

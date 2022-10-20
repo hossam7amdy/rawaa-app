@@ -1,20 +1,25 @@
 import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Flex, Heading, Text, ListItem, Stack } from '@chakra-ui/react';
 
 import { PATH } from '../../data/constants';
 import useMutateData from '../../hooks/useMutateData';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
+import { AddressActions } from '../../store/AddressSlice';
 
 export const SingleAddress = props => {
+  const dispatch = useDispatch();
   const { id, city, notes, shortName, governorate, isActive, ...rest } = props;
 
   const { token } = useContext(AuthContext);
   const { deleteBtn } = token.translation;
 
-  const { isLoading, mutate } = useMutateData({ key: 'address' });
+  const { isLoading, request } = useMutateData({ key: 'address' });
 
   const deleteAddressHandler = id => {
-    mutate({ method: 'delete', url: `${PATH.ADDRESS}/${id}` });
+    request({ method: 'delete', url: `${PATH.ADDRESS}/${id}` }).then(() =>
+      dispatch(AddressActions.removeAddressFromList(id))
+    );
   };
 
   return (
