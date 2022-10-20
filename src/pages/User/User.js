@@ -7,7 +7,7 @@ import {
   Container,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 
 import { Login } from './Login';
 import { Register } from './Register';
@@ -23,7 +23,7 @@ export const User = () => {
         rounded="md"
         bg="gray.50"
         variant="enclosed"
-        colorScheme="brand"
+        colorScheme="secondary"
       >
         <TabList mb="1em">
           <Tab>{login}</Tab>
