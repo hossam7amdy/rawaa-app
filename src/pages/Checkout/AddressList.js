@@ -32,7 +32,7 @@ export const AddressList = ({ onAddressId }) => {
     if (data) {
       dispatch(AddressActions.replaceAddressList(data));
     }
-  }, [dispatch, data, addressList]);
+  }, [dispatch, data]);
 
   useEffect(() => {
     if (addressList.length !== 0) {
