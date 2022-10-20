@@ -7,27 +7,11 @@ import { ComunicationSection } from './ComunicationSection';
 
 export const Footer = () => {
   return (
-    <>
-      <Flex
-        pt={5}
-        pb={10}
-        mt={14}
-        h="200px"
-        as="footer"
-        bg="brand.200"
-        color="blackAlpha.700"
-      >
-        {/* section 1 */}
-        <LogoSection />
-
-        {/* section 2 */}
-        <ExploreSection />
-        {/* section 3 */}
-        <ComunicationSection />
-
-        {/* section 4 */}
-        <FeaturesSection />
-      </Flex>
-    </>
+    <Flex as="footer" pt={5} pb={10} h="200px" bg="secondary.50">
+      <LogoSection />
+      <ExploreSection />
+      <ComunicationSection />
+      <FeaturesSection />
+    </Flex>
   );
 };

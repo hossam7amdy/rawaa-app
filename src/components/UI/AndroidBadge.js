@@ -3,7 +3,7 @@ import { Image } from '@chakra-ui/react';
 
 import badge from '../../assets/google-play-badge.png';
 import badgeAR from '../../assets/google-play-badge-AR.png';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 
 export const AndroidBadge = props => {
   const { token } = useContext(AuthContext);

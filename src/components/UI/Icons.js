@@ -1,12 +1,17 @@
 import { Icon as ChakraIcon } from '@chakra-ui/react';
+
+import {
+  HiPhone,
+  HiShoppingCart,
+  HiOutlineLocationMarker,
+} from 'react-icons/hi';
+import { GrView, GrAndroid } from 'react-icons/gr';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa';
-import { HiShoppingCart, HiPhone } from 'react-icons/hi';
-import { BsSearch, BsChevronDown, BsHeart, BsHeartFill } from 'react-icons/bs';
-import { GrView, GrAndroid, GrMapLocation } from 'react-icons/gr';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import { BsSearch, BsChevronDown, BsHeart, BsHeartFill } from 'react-icons/bs';
 
 const Logo = props => (
-  <ChakraIcon width="200" viewBox="0 0 180 80" h="40px" fill="currentColor">
+  <ChakraIcon viewBox="0 0 180 80" {...props}>
     <g
       id="Group_7"
       data-name="Group 7"
@@ -51,10 +56,10 @@ const getIcon = Object.freeze({
   facebook: FaFacebook,
   whatsapp: FaWhatsapp,
   favFilled: BsHeartFill,
-  location: GrMapLocation,
   dropdownMenu: BsChevronDown,
   arrowLeft: MdKeyboardArrowLeft,
   arrowRight: MdKeyboardArrowRight,
+  location: HiOutlineLocationMarker,
 });
 
 export const Icon = ({ name, ...config }) => {

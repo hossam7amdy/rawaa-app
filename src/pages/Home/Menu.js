@@ -2,13 +2,14 @@ import { useContext } from 'react';
 import { Heading, VStack, Flex, List, Skeleton } from '@chakra-ui/react';
 
 import { MenuItem } from './MenuItem';
-import { AuthContext } from '../../context/AuthContext';
-import { useFetchData } from '../../hooks/useFetchData';
+import { AuthContext } from '../../store/AuthContext';
+import { useFetchById } from '../../hooks/useFetchById';
 
 export const Menu = () => {
   const { token, lang } = useContext(AuthContext);
-  const { isLoading, data: categories } = useFetchData({
+  const { isLoading, data: categories } = useFetchById({
     lang,
+    id: 'all',
     key: 'categories',
   });
 

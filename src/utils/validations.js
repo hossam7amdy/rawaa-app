@@ -51,6 +51,6 @@ export const VALIDATE_EMAIL = email => {
     return 'Required';
   }
   if (!EMAIL.test(email)) {
-    return 'Invalid Email Address';
+    return 'Invalid email address';
   }
 };

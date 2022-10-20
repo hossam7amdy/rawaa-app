@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Heading, VStack, Link, useDisclosure, Button } from '@chakra-ui/react';
 
 import { Modal } from '../../UI/Modal';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 
 export const ExploreSection = () => {
   const [modalData, setModalData] = useState();

@@ -10,12 +10,12 @@ import {
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Icon } from '../../UI/Icons';
-import { AuthContext } from '../../../context/AuthContext';
-import { CartActions } from '../../../context/CartSlice';
+import { AuthContext } from '../../../store/AuthContext';
+import { CartActions } from '../../../store/CartSlice';
 import { OrdersModal } from '../../orders/OrdersModal';
-import { useNavigate } from 'react-router-dom';
 
 export const HeaderMenuList = () => {
   const navigate = useNavigate();
@@ -34,13 +34,15 @@ export const HeaderMenuList = () => {
       <Menu isLazy>
         <MenuButton
           as={Button}
-          variant="brand"
-          rounded="md"
+          _hover={{}}
+          variant="link"
+          colorScheme="brand"
+          minW="min-content"
           rightIcon={<Icon name="dropdownMenu" />}
         >
-          <Text fontSize="sm">{`${menu.buttonText} ${firstName}`}</Text>
+          {menu.buttonText} {firstName}
         </MenuButton>
-        <MenuList>
+        <MenuList color="secondary.500">
           <MenuItem onClick={() => navigate('profile')}>
             {menu.list[0]}
           </MenuItem>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button, HStack, Text, useDisclosure } from '@chakra-ui/react';
 
 import { NUMBER_FORMATER } from '../../../utils/helpers';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 import { CartModal } from '../../cart/CartModal';
 import { Icon } from '../../UI/Icons';
 
@@ -18,11 +18,23 @@ export const CartButton = () => {
   return (
     <>
       <CartModal onClose={onClose} isOpen={isOpen} />
-      <Button variant="brand" bg="brand.600" rounded="xl" onClick={onOpen}>
+      <Button
+        rounded="xl"
+        variant="brand"
+        minW="min-content"
+        color="secondary.700"
+        onClick={onOpen}
+      >
         <HStack justify="center" spacing={1}>
           <Icon name="cart" boxSize={6} />
           <Text>{cartButton}</Text>
-          <Text bg="brand.500" px={2} py={1} rounded="full">
+          <Text
+            px={2}
+            py={1}
+            rounded="full"
+            color="brand.400"
+            bg="secondary.700"
+          >
             {NUMBER_FORMATER(locale, qty)}
           </Text>
         </HStack>

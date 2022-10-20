@@ -1,7 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 
 export const LaguageSwitcher = () => {
   const { lang, setLocale } = useContext(AuthContext);
@@ -13,17 +13,14 @@ export const LaguageSwitcher = () => {
   }, [isArabic, lang]);
 
   return (
-    <Flex align="center" h={7} bg="brand.600" p={1} rounded="lg">
+    <Flex h={7} p={1} rounded="lg" align="center" bg="brand.400">
       <Button
         size="xs"
         rounded="lg"
-        bg="brand.600"
-        color="current"
+        variant="brand"
         fontSize="10px"
-        colorScheme="brand"
+        color="secondary.500"
         isActive={!isArabic}
-        _hover={{ backgroundColor: 'brand.500' }}
-        _active={{ backgroundColor: 'brand.500' }}
         onClick={() => setLocale('en-US')}
       >
         ENG
@@ -31,13 +28,10 @@ export const LaguageSwitcher = () => {
       <Button
         size="xs"
         rounded="lg"
-        bg="brand.600"
-        color="current"
+        variant="brand"
         fontSize="10px"
-        colorScheme="brand"
+        color="secondary.500"
         isActive={isArabic}
-        _hover={{ backgroundColor: 'brand.500' }}
-        _active={{ backgroundColor: 'brand.500' }}
         onClick={() => setLocale('ar-EG')}
       >
         عربى

@@ -90,7 +90,7 @@ export const Slider = () => {
       dir="ltr"
       position="relative"
       overflow="hidden"
-      bg="brand.50"
+      bg="secondary.50"
     >
       <IconButton
         top={0}

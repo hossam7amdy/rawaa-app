@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Heading, VStack } from '@chakra-ui/react';
 
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 import { AndroidBadge } from '../../UI/AndroidBadge';
 
 export const FeaturesSection = () => {

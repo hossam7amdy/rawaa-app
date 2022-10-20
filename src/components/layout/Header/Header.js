@@ -1,13 +1,13 @@
-import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
-import { Flex, Divider, Link } from '@chakra-ui/react';
+import { Flex, Divider } from '@chakra-ui/react';
 
 import { LaguageSwitcher } from './LaguageSwitcher';
 import { HeaderMenuList } from './HeaderMenuList';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 import { CartButton } from './CartButton';
 import { SearchBox } from './SearchBox';
 import { Logo } from '../../UI/Logo';
+import { Link } from './Link';
 
 export const Header = () => {
   const { token, isLoggedIn } = useContext(AuthContext);
@@ -16,68 +16,26 @@ export const Header = () => {
   return (
     <Flex
       as="header"
-      gap={10}
-      px={5}
+      gap={5}
+      px={2}
       w="full"
-      h="60px"
+      h="70px"
       top={0}
       shadow="md"
       pos="fixed"
       zIndex={200}
-      spacing={10}
       align="center"
-      bg="brand.400"
+      color="brand.500"
+      bg="secondary.700"
     >
-      <Flex flex={1} align="center" gap={10}>
-        <Logo />
-        <Link
-          to="menu"
-          fontWeight="bold"
-          _hover={{ color: 'blackAlpha.700' }}
-          as={props => (
-            <NavLink
-              {...props}
-              style={({ isActive }) => {
-                return { opacity: isActive ? '50%' : '100%' };
-              }}
-            />
-          )}
-        >
-          {foodMenu}
-        </Link>
-      </Flex>
-
-      <Flex flexGrow={1}>
-        <SearchBox />
-      </Flex>
-
-      <Flex flex={1} gap={2} align="center" justify="space-between">
-        <Flex gap={5} align="center">
-          {isLoggedIn && <HeaderMenuList />}
-          {!isLoggedIn && (
-            <Link
-              to="user"
-              fontWeight="bold"
-              _hover={{ color: 'blackAlpha.700' }}
-              as={props => (
-                <NavLink
-                  {...props}
-                  style={({ isActive }) => {
-                    return { opacity: isActive ? '50%' : '100%' };
-                  }}
-                />
-              )}
-            >
-              {user}
-            </Link>
-          )}
-
-          <Divider orientation="vertical" />
-          <CartButton />
-        </Flex>
-
-        <LaguageSwitcher />
-      </Flex>
+      <Logo />
+      <Link to="menu" name={foodMenu} />
+      <SearchBox />
+      {isLoggedIn && <HeaderMenuList />}
+      {!isLoggedIn && <Link to="user" name={user} />}
+      <CartButton />
+      <Divider h="25px" orientation="vertical" />
+      <LaguageSwitcher />
     </Flex>
   );
 };

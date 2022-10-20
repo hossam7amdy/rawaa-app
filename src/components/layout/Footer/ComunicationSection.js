@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Button, Heading, HStack, IconButton, VStack } from '@chakra-ui/react';
 
 import { Icon } from '../../UI/Icons';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 
 export const ComunicationSection = () => {
   const { token } = useContext(AuthContext);
@@ -12,7 +12,8 @@ export const ComunicationSection = () => {
     <HStack flex={1} flexDir="column" justify="space-around">
       <Button
         fontSize="xl"
-        variant="unstyled"
+        variant="link"
+        colorScheme="current"
         leftIcon={<Icon name="location" />}
         _hover={{
           opacity: '70%',

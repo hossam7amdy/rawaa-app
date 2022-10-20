@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../store/AuthContext';
 import { Flex, Text, VStack } from '@chakra-ui/react';
 
 import { Logo } from '../../UI/Logo';

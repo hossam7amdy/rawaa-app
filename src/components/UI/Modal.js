@@ -18,6 +18,7 @@ export const Modal = props => {
       isOpen={isOpen}
       onClose={onClose}
       scrollBehavior="inside"
+      blockScrollOnMount={false}
       {...rest}
     >
       <ModalOverlay />
