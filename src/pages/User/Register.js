@@ -16,6 +16,8 @@ export const Register = () => {
   const toast = useToast();
   const { token } = useContext(AuthContext);
   const { isLoading, request } = useMutateData({ key: 'user' });
+
+  const { btnLoadingText } = token.translation;
   const { fullname, phone, email, password, register } = token.translation.user;
 
   const formSubmitHandler = (enteredValues, actions) => {
@@ -76,7 +78,7 @@ export const Register = () => {
               type="submit"
               variant="brand"
               isLoading={isLoading}
-              loadingText="submitting"
+              loadingText={btnLoadingText}
               spinnerPlacement="end"
             >
               {register}

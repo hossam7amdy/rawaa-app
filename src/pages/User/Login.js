@@ -13,6 +13,7 @@ export const Login = () => {
   const { isLoading, request } = useMutateData({ key: 'user' });
 
   const { email, password, login: loginBtn } = token.translation.user;
+  const { btnLoadingText } = token.translation;
 
   const formSubmitHandler = enteredValues => {
     const config = {
@@ -50,7 +51,7 @@ export const Login = () => {
               type="submit"
               variant="brand"
               isLoading={isLoading}
-              loadingText="Loading"
+              loadingText={btnLoadingText}
               spinnerPlacement="end"
             >
               {loginBtn}
