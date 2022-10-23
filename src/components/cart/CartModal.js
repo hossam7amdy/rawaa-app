@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Flex, List, Button, Heading, ListItem } from '@chakra-ui/react';
+import { Flex, List, Button, Heading } from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER } from '../../utils/helpers';
 import { AuthContext } from '../../store/AuthContext';
@@ -28,35 +28,32 @@ export const CartModal = ({ onClose, isOpen }) => {
           itemSize={sizeMapper[item.size - 1]}
         />
       ))}
-      <ListItem>
-        <Flex justify="space-between">
-          <Heading size="md">{cartModal.total}</Heading>
-          <Heading size="md">
-            {CURRENCY_FORMATER(token.locale, cart.totalAmount)}
-          </Heading>
-        </Flex>
-      </ListItem>
     </List>
   );
 
   const footer = (
-    <Flex gap={2}>
-      <Button variant="outline" colorScheme="brand" mr={3} onClick={onClose}>
-        {closeBtn}
-      </Button>
-
-      {hasItems && (
-        <Button
-          isDisabled={cart.totalAmount > 999}
-          variant="brand"
-          onClick={() => {
-            onClose();
-            navigate('/checkout', { replace: true });
-          }}
-        >
-          {cartModal.actionBtn}
+    <Flex w="full" justify="space-between">
+      <Heading size="md">
+        {cartModal.total}: {CURRENCY_FORMATER(token.locale, cart.totalAmount)}
+      </Heading>
+      <Flex gap={2}>
+        <Button variant="outline" colorScheme="brand" mr={3} onClick={onClose}>
+          {closeBtn}
         </Button>
-      )}
+
+        {hasItems && (
+          <Button
+            isDisabled={cart.totalAmount > 999}
+            variant="brand"
+            onClick={() => {
+              onClose();
+              navigate('/checkout', { replace: true });
+            }}
+          >
+            {cartModal.actionBtn}
+          </Button>
+        )}
+      </Flex>
     </Flex>
   );
 
