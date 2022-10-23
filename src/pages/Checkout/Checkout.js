@@ -21,6 +21,7 @@ export const Checkout = () => {
 
   const { items, totalAmount, totalQuantity } = cart;
   const canPlaceOrder = !!addressId && !!totalQuantity && totalAmount < 1000;
+  const { btnLoadingText } = token.translation;
   const { actionBtn } = token.translation.checkout;
 
   const placeOrderHandler = () => {
@@ -74,7 +75,7 @@ export const Checkout = () => {
           w="full"
           variant="brand"
           isLoading={isLoading}
-          loadingText={'submitting'}
+          loadingText={btnLoadingText}
           isDisabled={!canPlaceOrder}
           onClick={placeOrderHandler}
         >

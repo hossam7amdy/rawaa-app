@@ -33,7 +33,7 @@ export const NewAddressModal = ({ isOpen, onClose }) => {
     governorate,
     buildingNum,
   } = token.translation.addressForm;
-  const { confirmBtn, closeBtn } = token.translation;
+  const { confirmBtn, closeBtn, btnLoadingText } = token.translation;
 
   const submitHandler = (values, actions) => {
     const config = {
@@ -146,7 +146,7 @@ export const NewAddressModal = ({ isOpen, onClose }) => {
                 type="submit"
                 variant="brand"
                 isLoading={isLoading}
-                loadingText="submitting"
+                loadingText={btnLoadingText}
               >
                 {confirmBtn}
               </Button>

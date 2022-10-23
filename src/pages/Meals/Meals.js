@@ -17,9 +17,9 @@ export const Meals = () => {
   });
 
   return (
-    <Container minW="95vw" minH="70vh">
+    <Container minW="95vw" minH="50vh" m={2}>
       <Navbar />
-      <Skeleton w="95vw" h="70vh" isLoaded={!isLoading} fadeDuration={1}>
+      <Skeleton isLoaded={!isLoading} fadeDuration={1}>
         <Flex as="section" wrap="wrap" gap={2} rowGap={3}>
           {products?.map((item, idx) => (
             <MealItem key={idx} item={item} />
