@@ -3,17 +3,21 @@ import { Form, Formik } from 'formik';
 import { Button, Container, Divider, Heading, Stack } from '@chakra-ui/react';
 
 import { VALIDATE_TEXT } from '../../utils/validations';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import CustomInput from '../../components/form/CustomInput';
+import { PATH } from '../../data/constants';
 
 export const EditName = () => {
-  const { token } = useContext(AuthContext);
-  const { isLoading, mutate } = useMutateData({ key: 'user' });
+  const { token, login } = useContext(AuthContext);
+  const { isLoading, request } = useMutateData({ key: 'user' });
 
-  const editNameHandler = (values, actions) => {
+  const { saveBtn, btnLoadingText } = token.translation;
+  const { title, label } = token.translation.edit.personal;
+
+  const editNameHandler = values => {
     const config = {
-      url: token.user.id,
+      url: `${PATH.USER}/${token.user.id}`,
       method: 'put',
       data: {
         ...token.user,
@@ -21,7 +25,7 @@ export const EditName = () => {
       },
     };
 
-    mutate(config);
+    request(config).then(data => login(data));
   };
 
   const initialValues = {
@@ -30,7 +34,7 @@ export const EditName = () => {
 
   return (
     <Stack w="full">
-      <Heading size="md">Personal Information</Heading>
+      <Heading size="md">{title}</Heading>
       <Divider />
       <Formik initialValues={initialValues} onSubmit={editNameHandler}>
         {({ values }) => (
@@ -40,7 +44,7 @@ export const EditName = () => {
                 <CustomInput
                   type="text"
                   name="fullName"
-                  label="Full Name"
+                  label={label}
                   validate={VALIDATE_TEXT}
                 />
                 <Button
@@ -48,10 +52,10 @@ export const EditName = () => {
                   variant="brand"
                   isLoading={isLoading}
                   spinnerPlacement="end"
-                  loadingText="submitting"
+                  loadingText={btnLoadingText}
                   isDisabled={values.fullName === initialValues.fullName}
                 >
-                  Save
+                  {saveBtn}
                 </Button>
               </Stack>
             </Container>

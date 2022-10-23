@@ -1,26 +1,31 @@
 import { useContext } from 'react';
 import { Form, Formik } from 'formik';
 import {
+  Stack,
   Button,
-  Container,
+  HStack,
   Divider,
   Heading,
-  HStack,
-  Stack,
+  Container,
 } from '@chakra-ui/react';
 
 import { VALIDATE_PASSWORD } from '../../utils/validations';
-import { AuthContext } from '../../context/AuthContext';
+import { DeleteAccount } from './DeleteAccount';
+import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import CustomInput from '../../components/form/CustomInput';
+import { PATH } from '../../data/constants';
 
 export const ChangePassword = () => {
-  const { token } = useContext(AuthContext);
-  const { isLoading, mutate } = useMutateData({ key: 'user' });
+  const { token, login } = useContext(AuthContext);
+  const { isLoading, request } = useMutateData({ key: 'user' });
 
-  const changePasswordHandler = (values, actions) => {
+  const { confirmBtn, btnLoadingText } = token.translation;
+  const { title, old, newPass, confirm } = token.translation.edit.security;
+
+  const changePasswordHandler = values => {
     const config = {
-      url: token.user.id,
+      url: `${PATH.USER}/${token.user.id}`,
       method: 'put',
       data: {
         ...token.user,
@@ -28,13 +33,19 @@ export const ChangePassword = () => {
       },
     };
 
-    console.log(config);
-    mutate(config, {
-      onSuccess: () => actions.resetForm(),
-    });
+    request(config).then(data => login(data));
   };
 
-  const matchPassword = values => {
+  const matchOldPassword = oldPassword => {
+    if (token.user.password !== oldPassword) {
+      return 'Invalid Password';
+    }
+  };
+
+  const matchNewPassword = values => {
+    if (!values.confirmPassword) {
+      return 'Required';
+    }
     if (values.newPassword !== values.confirmPassword) {
       return 'Password does not match';
     }
@@ -51,7 +62,7 @@ export const ChangePassword = () => {
 
   return (
     <Stack w="full">
-      <Heading size="md">Security</Heading>
+      <Heading size="md">{title}</Heading>
       <Divider />
       <Formik initialValues={initialValues} onSubmit={changePasswordHandler}>
         {({ values }) => (
@@ -61,22 +72,23 @@ export const ChangePassword = () => {
                 <CustomInput
                   type="password"
                   name="oldPassword"
-                  label="Old Password"
-                  placeholder="Enter old password"
+                  label={old.label}
+                  placeholder={old.placeholder}
+                  validate={matchOldPassword}
                 />
                 <CustomInput
                   type="password"
                   name="newPassword"
-                  label="New Password"
-                  placeholder="Enter new password"
+                  label={newPass.label}
+                  placeholder={newPass.placeholder}
                   validate={VALIDATE_PASSWORD}
                 />
                 <CustomInput
                   type="password"
                   name="confirmPassword"
-                  label="Confirm Password"
-                  placeholder="Confirm new password"
-                  validate={() => matchPassword(values)}
+                  label={confirm.label}
+                  placeholder={confirm.placeholder}
+                  validate={() => matchNewPassword(values)}
                 />
                 <HStack w="full">
                   <Button
@@ -84,13 +96,11 @@ export const ChangePassword = () => {
                     variant="brand"
                     isLoading={isLoading}
                     spinnerPlacement="end"
-                    loadingText="submitting"
+                    loadingText={btnLoadingText}
                   >
-                    Confirm
+                    {confirmBtn}
                   </Button>
-                  <Button size="sm" variant="link" colorScheme="red">
-                    Delete account
-                  </Button>
+                  <DeleteAccount />
                 </HStack>
               </Stack>
             </Container>

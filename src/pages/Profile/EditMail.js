@@ -3,10 +3,13 @@ import { Formik, Form } from 'formik';
 import { Button, Container, Divider, Heading, Stack } from '@chakra-ui/react';
 
 import CustomInput from '../../components/form/CustomInput';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../store/AuthContext';
 
 export const EditMail = () => {
   const { token } = useContext(AuthContext);
+
+  const { saveBtn } = token.translation;
+  const { title, labelEmail, labelPassword } = token.translation.edit.email;
 
   const initials = {
     email: token.user.email,
@@ -15,7 +18,7 @@ export const EditMail = () => {
 
   return (
     <Stack w="full">
-      <Heading size="md">Email address</Heading>
+      <Heading size="md">{title}</Heading>
       <Divider />
       <Formik initialValues={initials}>
         <Form>
@@ -25,16 +28,16 @@ export const EditMail = () => {
                 isDisabled
                 name="email"
                 type="email"
-                label="E-mail"
+                label={labelEmail}
               />
               <CustomInput
                 isDisabled
                 name="password"
                 type="password"
-                label="Password"
+                label={labelPassword}
               />
               <Button isDisabled type="submit" variant="brand">
-                Save
+                {saveBtn}
               </Button>
             </Stack>
           </Container>
