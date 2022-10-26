@@ -5,10 +5,18 @@ import {
   HiShoppingCart,
   HiOutlineLocationMarker,
 } from 'react-icons/hi';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrView, GrAndroid } from 'react-icons/gr';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { BsSearch, BsChevronDown, BsHeart, BsHeartFill } from 'react-icons/bs';
+import {
+  BsSearch,
+  BsChevronDown,
+  BsHeart,
+  BsHeartFill,
+  BsChevronRight,
+  BsChevronLeft,
+} from 'react-icons/bs';
 
 const Logo = props => (
   <ChakraIcon viewBox="0 0 180 80" {...props}>
@@ -49,6 +57,7 @@ const getIcon = Object.freeze({
   logo: Logo,
   view: GrView,
   fav: BsHeart,
+  menu: GiHamburgerMenu,
   phone: HiPhone,
   search: BsSearch,
   android: GrAndroid,
@@ -57,6 +66,8 @@ const getIcon = Object.freeze({
   whatsapp: FaWhatsapp,
   favFilled: BsHeartFill,
   dropdownMenu: BsChevronDown,
+  chevronRight: BsChevronRight,
+  chevronLeft: BsChevronLeft,
   arrowLeft: MdKeyboardArrowLeft,
   arrowRight: MdKeyboardArrowRight,
   location: HiOutlineLocationMarker,

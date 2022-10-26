@@ -52,7 +52,7 @@ export const AddressList = ({ onAddressId }) => {
     <>
       <NewAddressModal isOpen={isOpen} onClose={onClose} />
       <Stack h="full" w="full" align="start">
-        <Heading size="md">{address}</Heading>
+        <Heading size="lg">{address}</Heading>
 
         <Stack as={List} w="full" h="full">
           <SkeletonText

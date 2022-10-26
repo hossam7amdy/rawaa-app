@@ -38,7 +38,7 @@ export const CartPreview = () => {
   return (
     <Stack w="full" h="full">
       <HStack>
-        <Heading size="md">{summery}</Heading>
+        <Heading size="lg">{summery}</Heading>
         <Text as="b" fontSize="xs" color="gray.600">
           ({NUMBER_FORMATER(locale, totalQuantity)} {item})
         </Text>
