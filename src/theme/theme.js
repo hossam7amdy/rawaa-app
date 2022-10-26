@@ -17,13 +17,6 @@ const inputSelectStyles = {
       },
     },
   },
-  sizes: {
-    md: {
-      field: {
-        // borderRadius: 'none',
-      },
-    },
-  },
 };
 
 const brandRing = {
@@ -33,8 +26,17 @@ const brandRing = {
   },
 };
 
+const breakpoints = {
+  sm: '320px',
+  md: '768px',
+  lg: '905px',
+  xl: '1200px',
+  '2xl': '1536px',
+};
+
 const theme = extendTheme(
   {
+    breakpoints,
     colors: {
       brand: {
         50: '#FEF7E6',
@@ -83,6 +85,7 @@ const theme = extendTheme(
             },
           }),
         },
+        size: { base: 'sm', md: 'md' },
       },
       Input: { ...inputSelectStyles },
       Select: { ...inputSelectStyles },
