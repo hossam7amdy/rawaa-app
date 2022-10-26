@@ -1,33 +1,29 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import {
   Text,
-  Flex,
   Image,
-  Radio,
-  VStack,
+  Stack,
   Spacer,
-  Select,
   HStack,
   Button,
-  Heading,
   Skeleton,
-  FormLabel,
-  Container,
-  IconButton,
-  RadioGroup,
-  FormControl,
+  GridItem,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { useContext, useEffect, useReducer, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useContext, useEffect, useReducer } from 'react';
 
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
 import { PATH, SIZE_PRICE_MAPPER } from '../../data/constants';
+import { QuantitiyControl } from './QuantitiyControl';
+import { FavoriteButton } from './FavoriteButton';
+import { TasteControl } from './TasteControl';
 import { useFetchById } from '../../hooks/useFetchById';
 import { AuthContext } from '../../store/AuthContext';
+import { SizeControl } from './SizeControl';
+import { Description } from './Description';
 import { CartActions } from '../../store/CartSlice';
-import QuantityButton from './QuantityButton';
 import useMutateData from '../../hooks/useMutateData';
-import { Icon } from '../../components/UI/Icons';
 
 const initialState = {
   size: 1,
@@ -55,12 +51,11 @@ export const Details = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isFavorite, toggleIsFavorite] = useState(false);
   const { token, isLoggedIn, lang } = useContext(AuthContext);
   const [orderState, dispatchOrder] = useReducer(reducer, initialState);
 
   const locale = token.locale;
-  const translation = token.translation.productDetails;
+  const { button } = token.translation.productDetails;
   const productId = id.split('-')[1];
 
   const { request } = useMutateData({ key: 'cart' });
@@ -115,80 +110,36 @@ export const Details = () => {
 
   return (
     <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-      <Container
-        mt={10}
-        as={Flex}
-        minH="70vh"
-        minW="container.lg"
-        justifyContent="space-around"
+      <SimpleGrid
+        px={2}
+        my={5}
+        gap={2}
+        mx="auto"
+        columns={{ base: 1, md: 2 }}
+        maxW={{ base: 'full', md: '1024px' }}
       >
-        <Flex flexDir="column" gap={5}>
-          <Heading>{product?.title}</Heading>
-          <Text as="i" fontSize="sm">
-            {product?.calories} {translation.kcal}
-          </Text>
+        <GridItem>
+          <Image
+            maxH="70vh"
+            fit="cover"
+            rounded="md"
+            boxSize="full"
+            alt={product?.title}
+            src={product ? PATH.FILE + product.image : ''}
+            fallbackSrc="https://via.placeholder.com/150"
+          />
+        </GridItem>
 
+        <GridItem as={Stack} justify="space-between">
+          <Description product={product} price={orderState.price} />
+          <SizeControl product={product} dispatch={dispatchOrder} />
+          <TasteControl
+            product={product}
+            taste={orderState.taste}
+            dispatch={dispatchOrder}
+          />
+          <QuantitiyControl dispatch={dispatchOrder} />
           <HStack>
-            <Text
-              as={product?.discountValue ? 'del' : 'b'}
-              fontSize={product?.discountValue ? 'sm' : 'lg'}
-            >
-              {CURRENCY_FORMATER(locale, orderState.price)}
-            </Text>
-            {product?.discountValue && (
-              <Text as="b" fontSize="lg">
-                {CURRENCY_FORMATER(
-                  locale,
-                  DISCOUNT_CALCULATOR(orderState.price, product?.discountValue)
-                )}
-              </Text>
-            )}
-          </HStack>
-
-          <FormControl as={VStack} align="start" spacing={-2}>
-            <FormLabel fontSize="xs">{translation.sizeLabel}</FormLabel>
-            <Select
-              dir="ltr"
-              onChange={event =>
-                dispatchOrder({ type: 'SIZE', value: +event.target.value })
-              }
-            >
-              <option value={1}>{translation.sizeMapper[0]}</option>
-              {product?.mediumSizePrice && (
-                <option value={2}>{translation.sizeMapper[1]}</option>
-              )}
-              {product?.bigSizePrice && (
-                <option value={3}>{translation.sizeMapper[2]}</option>
-              )}
-            </Select>
-          </FormControl>
-
-          <RadioGroup
-            colorScheme="brand"
-            value={orderState.taste}
-            onChange={value => dispatchOrder({ type: 'TASTE', value })}
-          >
-            <HStack>
-              <Radio value="1">{translation.tasteMapper[0]}</Radio>
-              {product?.hasTaste > 0 && (
-                <Radio value="2">{translation.tasteMapper[1]}</Radio>
-              )}
-            </HStack>
-          </RadioGroup>
-
-          <FormControl as={VStack} align="start" spacing={-2}>
-            <FormLabel fontSize="xs">{translation.quantityLabel}</FormLabel>
-            <QuantityButton
-              min={1}
-              max={15}
-              defaultValue={1}
-              onChange={value =>
-                dispatchOrder({ type: 'QUANTITY', value: +value })
-              }
-            />
-          </FormControl>
-
-          <HStack w="full">
             <Button
               variant="brand"
               isDisabled={
@@ -196,20 +147,9 @@ export const Details = () => {
               }
               onClick={orderSubmitHandler}
             >
-              {translation.button}
+              {button}
             </Button>
-            <IconButton
-              variant="outline"
-              colorScheme="brand"
-              icon={
-                isFavorite ? (
-                  <Icon name="favFilled" color="red.500" />
-                ) : (
-                  <Icon name="fav" />
-                )
-              }
-              onClick={() => toggleIsFavorite(prev => !prev)}
-            />
+            <FavoriteButton />
             <Spacer />
             <Text as="b">
               {CURRENCY_FORMATER(
@@ -218,18 +158,8 @@ export const Details = () => {
               )}
             </Text>
           </HStack>
-        </Flex>
-
-        <Image
-          fit="cover"
-          shadow="md"
-          rounded="md"
-          boxSize="md"
-          alt={product?.title}
-          src={product ? PATH.FILE + product.image : ''}
-          fallbackSrc="https://via.placeholder.com/150"
-        />
-      </Container>
+        </GridItem>
+      </SimpleGrid>
     </Skeleton>
   );
 };
