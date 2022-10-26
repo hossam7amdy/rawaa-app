@@ -24,8 +24,13 @@ const cartSlice = createSlice({
         state.items.push(newItem);
       } else {
         if (exitingItem.quantity + newItem.quantity > 15) return;
+        exitingItem.size = newItem.size;
+        exitingItem.price = newItem.price;
+        exitingItem.taste = newItem.taste;
+        exitingItem.drinkId = newItem.drinkId;
+        exitingItem.createOn = newItem.createOn;
         exitingItem.quantity += newItem.quantity;
-        exitingItem.amount = exitingItem.quantity * exitingItem.price;
+        exitingItem.amount = exitingItem.quantity * newItem.price;
       }
       state.totalQuantity += newItem.quantity;
       state.totalAmount += newItem.quantity * newItem.price;
