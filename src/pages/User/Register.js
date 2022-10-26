@@ -39,13 +39,13 @@ export const Register = () => {
   };
 
   return (
-    <VStack w="full">
+    <VStack>
       <Formik
         initialValues={{ fullname: '', phone: '', email: '', password: '' }}
         onSubmit={formSubmitHandler}
       >
         <Form>
-          <VStack spacing={4} w="450px">
+          <VStack w={{ base: '290px', md: '500px' }} spacing={5}>
             <CustomInput
               type="text"
               name="fullname"
