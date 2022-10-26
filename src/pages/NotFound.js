@@ -1,9 +1,9 @@
-import { VStack, Heading } from '@chakra-ui/react';
+import { Heading, Flex } from '@chakra-ui/react';
 
 export const NotFound = () => {
   return (
-    <VStack minH="70vh" justify="center">
+    <Flex justify="center" my={20}>
       <Heading size="lg">404 | Not Found</Heading>
-    </VStack>
+    </Flex>
   );
 };

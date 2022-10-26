@@ -85,7 +85,6 @@ const theme = extendTheme(
             },
           }),
         },
-        size: { base: 'sm', md: 'md' },
       },
       Input: { ...inputSelectStyles },
       Select: { ...inputSelectStyles },

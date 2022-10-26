@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex, Button, useToast, Stack, Spacer } from '@chakra-ui/react';
+import { Flex, Button, useToast, Stack } from '@chakra-ui/react';
 
+import { OrdersActions } from '../../store/OrdersSlice';
 import { CartPreview } from './CartPreview';
 import { AddressList } from './AddressList';
 import { AuthContext } from '../../store/AuthContext';
 import { CartActions } from '../../store/CartSlice';
 import useMutateData from '../../hooks/useMutateData';
-import { OrdersActions } from '../../store/OrdersSlice';
 
 export const Checkout = () => {
   const toast = useToast();
@@ -19,10 +19,10 @@ export const Checkout = () => {
   const [addressId, setAddressId] = useState(null);
   const { isLoading, request } = useMutateData({ key: 'order' });
 
-  const { items, totalAmount, totalQuantity } = cart;
-  const canPlaceOrder = !!addressId && !!totalQuantity && totalAmount < 1000;
   const { btnLoadingText } = token.translation;
   const { actionBtn } = token.translation.checkout;
+  const { items, totalAmount, totalQuantity } = cart;
+  const canPlaceOrder = !!addressId && !!totalQuantity && totalAmount < 1000;
 
   const placeOrderHandler = () => {
     const userId = token.user.id;
@@ -67,12 +67,18 @@ export const Checkout = () => {
   };
 
   return (
-    <Flex w="full" h="full" gap={2} px={2} mt={5}>
+    <Flex
+      px={2}
+      my={5}
+      gap={{ base: 10, md: 5 }}
+      flexDir={{ base: 'column', md: 'row' }}
+    >
+      <Flex flex={2}>
+        <CartPreview />
+      </Flex>
       <Stack flex={3} h="full">
         <AddressList onAddressId={setAddressId} />
-        <Spacer />
         <Button
-          w="full"
           variant="brand"
           isLoading={isLoading}
           loadingText={btnLoadingText}
@@ -82,9 +88,6 @@ export const Checkout = () => {
           {actionBtn}
         </Button>
       </Stack>
-      <Flex flex={2} h="full">
-        <CartPreview />
-      </Flex>
     </Flex>
   );
 };

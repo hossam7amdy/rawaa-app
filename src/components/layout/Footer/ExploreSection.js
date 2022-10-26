@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Heading, VStack, Link, useDisclosure, Button } from '@chakra-ui/react';
+import { Flex, Text, Button, useDisclosure } from '@chakra-ui/react';
 
 import { Modal } from '../../UI/Modal';
 import { AuthContext } from '../../../store/AuthContext';
@@ -31,48 +31,57 @@ export const ExploreSection = () => {
         footer={modalFooter}
         size="lg"
       />
-      <VStack flex={1}>
-        <VStack h="full" align="start">
-          <Heading size="sm">{footer.explore}</Heading>
-          <VStack h="full" justify="space-evenly" align="start">
-            <Link
-              fontSize="xs"
-              fontWeight="bold"
-              onClick={() => handleClick({ header: footer.ourPromise })}
-            >
-              {footer.ourPromise}
-            </Link>
-            <Link
-              fontSize="xs"
-              fontWeight="bold"
-              onClick={() => handleClick({ header: footer['about-us'] })}
-            >
-              {footer['about-us']}
-            </Link>
-            <Link
-              fontSize="xs"
-              fontWeight="bold"
-              onClick={() =>
-                handleClick({ header: footer.policy, body: privacy })
-              }
-            >
-              {footer.policy}
-            </Link>
-            <Link
-              fontSize="xs"
-              fontWeight="bold"
-              onClick={() =>
-                handleClick({
-                  header: footer.conditions,
-                  body: termsConditions,
-                })
-              }
-            >
-              {footer.conditions}
-            </Link>
-          </VStack>
-        </VStack>
-      </VStack>
+
+      <Flex flexDir="column" gap={3} align={{ base: 'center', md: 'start' }}>
+        <Text fontSize="md" fontWeight="bold">
+          {footer.explore}
+        </Text>
+        <Flex flexDir="column" gap={2}>
+          <Button
+            variant="link"
+            color="current"
+            fontSize="xs"
+            fontWeight="bold"
+            onClick={() => handleClick({ header: footer.ourPromise })}
+          >
+            {footer.ourPromise}
+          </Button>
+          <Button
+            variant="link"
+            color="current"
+            fontSize="xs"
+            fontWeight="bold"
+            onClick={() => handleClick({ header: footer['about-us'] })}
+          >
+            {footer['about-us']}
+          </Button>
+          <Button
+            variant="link"
+            color="current"
+            fontSize="xs"
+            fontWeight="bold"
+            onClick={() =>
+              handleClick({ header: footer.policy, body: privacy })
+            }
+          >
+            {footer.policy}
+          </Button>
+          <Button
+            variant="link"
+            color="current"
+            fontSize="xs"
+            fontWeight="bold"
+            onClick={() =>
+              handleClick({
+                header: footer.conditions,
+                body: termsConditions,
+              })
+            }
+          >
+            {footer.conditions}
+          </Button>
+        </Flex>
+      </Flex>
     </>
   );
 };

@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useContext, useEffect } from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, Skeleton } from '@chakra-ui/react';
 
-import { LoadingSpinner } from '../UI/LoadingSpinner';
 import { OrdersActions } from '../../store/OrdersSlice';
 import { useFetchById } from '../../hooks/useFetchById';
 import { AuthContext } from '../../store/AuthContext';
@@ -29,20 +28,20 @@ export const OrdersModal = ({ isOpen, onClose }) => {
   const { closeBtn } = token.translation;
 
   const header = list[1];
-  const body = isLoading ? (
-    <LoadingSpinner />
-  ) : (
-    orders.map(order => (
-      <OrderItem
-        id={order.id}
-        key={order.id}
-        total={order.total}
-        date={order.orderDate}
-        fee={order.deliveryFee}
-        status={order.orderStatus}
-        number={order.orderNumber}
-      />
-    ))
+  const body = (
+    <Skeleton minH="xl" isLoaded={!isLoading} fadeDuration={1}>
+      {orders?.map(order => (
+        <OrderItem
+          id={order.id}
+          key={order.id}
+          total={order.total}
+          date={order.orderDate}
+          fee={order.deliveryFee}
+          status={order.orderStatus}
+          number={order.orderNumber}
+        />
+      ))}
+    </Skeleton>
   );
   const footer = (
     <Button variant="outline" colorScheme="brand" mr={3} onClick={onClose}>

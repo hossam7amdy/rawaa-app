@@ -1,7 +1,15 @@
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Text, Image, VStack, HStack, IconButton } from '@chakra-ui/react';
+import {
+  Text,
+  Flex,
+  Image,
+  HStack,
+  Heading,
+  ListItem,
+  IconButton,
+} from '@chakra-ui/react';
 
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
 import { CartActions } from '../../store/CartSlice';
@@ -41,38 +49,53 @@ export const MealItem = ({ item }) => {
   };
 
   return (
-    <HStack as="li" h={32} w={64} shadow="md" rounded="md">
-      <Image
-        fit="cover"
-        {...rounded}
-        boxSize={32}
-        src={PATH.FILE + item?.image}
-        alt={item?.title}
-        fallbackSrc="https://via.placeholder.com/150"
-      />
-      <VStack align="start">
-        <Text as="b" fontSize="xs">
-          {item.title}
-        </Text>
-        <Text size="md" fontWeight="bold">
+    <Flex
+      as={ListItem}
+      w={{ base: 'full', md: '2xs' }}
+      shadow="md"
+      rounded="md"
+    >
+      <Flex flex={1}>
+        <Image
+          fit="cover"
+          {...rounded}
+          boxSize="full"
+          cursor="pointer"
+          alt={item?.title}
+          src={PATH.FILE + item?.image}
+          fallbackSrc="https://via.placeholder.com/150"
+          onClick={() => navigate(`/meal/${item.title}-${item.id}`)}
+        />
+      </Flex>
+      <Flex
+        flex={1}
+        p={2}
+        align="start"
+        flexDir="column"
+        justify={{ base: 'space-evenly', md: 'space-between' }}
+      >
+        <Heading size="md">{item.title}</Heading>
+        <Text fontWeight="medium" fontSize={{ base: 'md', md: 'xl' }}>
           {CURRENCY_FORMATER(locale, item.smallSizePrice)}
         </Text>
         <HStack>
           <IconButton
             variant="brand"
-            size="sm"
+            aria-label="cart icon"
+            size={{ base: 'sm', md: 'md' }}
             icon={<Icon name="cart" />}
             isDisabled={!isLoggedIn}
             onClick={orderSubmitHandler}
           />
           <IconButton
             variant="brand"
-            size="sm"
+            aria-label="view icon"
+            size={{ base: 'sm', md: 'md' }}
             icon={<Icon name="view" />}
             onClick={() => navigate(`/meal/${item.title}-${item.id}`)}
           />
         </HStack>
-      </VStack>
-    </HStack>
+      </Flex>
+    </Flex>
   );
 };

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Flex, Image, ListItem, Text } from '@chakra-ui/react';
+
 import { PATH } from '../../data/constants';
 
 export const MenuItem = ({ item }) => {
@@ -13,6 +14,7 @@ export const MenuItem = ({ item }) => {
       pos="relative"
       cursor="pointer"
       overflow="hidden"
+      boxSize={{ base: '95vw', md: 'xs', '2xl': 'lg' }}
       onClick={() => navigate(`/menu/${item.id}`)}
     >
       <Text
@@ -29,7 +31,7 @@ export const MenuItem = ({ item }) => {
       <Image
         fit="cover"
         rounded="md"
-        boxSize="sm"
+        boxSize="full"
         zIndex={2}
         src={PATH.FILE + item?.image}
         alt={item.title}

@@ -12,9 +12,16 @@ export const Logo = ({ props }) => {
   return (
     <Link to="/">
       {isArabic ? (
-        <Icon name="logo" w={24} h={14} {...props} />
+        <Icon
+          name="logo"
+          h={{ base: '14', md: '16' }}
+          w={{ base: '28', md: '32' }}
+          {...props}
+        />
       ) : (
-        <Heading letterSpacing={-1}>RAWAA</Heading>
+        <Heading size="2xl" letterSpacing={-1}>
+          RAWAA
+        </Heading>
       )}
     </Link>
   );

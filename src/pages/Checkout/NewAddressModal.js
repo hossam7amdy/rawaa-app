@@ -163,6 +163,7 @@ export const NewAddressModal = ({ isOpen, onClose }) => {
       header={addressBtn}
       body={body}
       isOpen={isOpen}
+      onClose={onClose}
       scrollBehavior="inside"
     />
   );

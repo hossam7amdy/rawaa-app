@@ -1,4 +1,4 @@
-import { HStack, Skeleton } from '@chakra-ui/react';
+import { Flex, Skeleton } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ import { NavLink } from './NavLink';
 import { AuthContext } from '../../../store/AuthContext';
 import { useFetchById } from '../../../hooks/useFetchById';
 
-export const Navbar = () => {
+export const Navbar = ({ ignore }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { lang } = useContext(AuthContext);
@@ -18,7 +18,7 @@ export const Navbar = () => {
   });
 
   useEffect(() => {
-    if (id) return;
+    if (id || ignore) return;
     if (categories) {
       navigate(`/menu/${categories[0].id}`);
     }
@@ -26,7 +26,14 @@ export const Navbar = () => {
 
   return (
     <Skeleton isLoaded={!isLoading}>
-      <HStack as="nav" h="50px" w="95vw" spacing={5} overflowX="hidden">
+      <Flex
+        as="nav"
+        my={4}
+        gap={4}
+        overflowX="hidden"
+        w={{ base: 'max-content', lg: '100vw' }}
+        flexDir={{ base: 'column', lg: 'row' }}
+      >
         {categories?.map(item => (
           <NavLink
             key={item.id}
@@ -35,7 +42,7 @@ export const Navbar = () => {
             isActive={+id === item.id}
           />
         ))}
-      </HStack>
+      </Flex>
     </Skeleton>
   );
 };

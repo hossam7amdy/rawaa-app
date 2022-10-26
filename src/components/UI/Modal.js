@@ -4,12 +4,17 @@ import {
   ModalFooter,
   ModalOverlay,
   ModalContent,
-  // ModalCloseButton,
+  ModalCloseButton,
   Modal as ChakraModal,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { SCROLLBAR_STYLE } from '../../data/constants';
+import { AuthContext } from '../../store/AuthContext';
 
 export const Modal = props => {
+  const { lang } = useContext(AuthContext);
+
+  const isArabic = lang === 'ar';
   const { isOpen, onClose, header, body, footer, ...rest } = props;
 
   return (
@@ -24,10 +29,10 @@ export const Modal = props => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{header}</ModalHeader>
-        {/* <ModalCloseButton /> */}
+        <ModalCloseButton left={isArabic ? 3 : ''} right={isArabic ? '' : 3} />
         <ModalBody sx={SCROLLBAR_STYLE}>{body}</ModalBody>
 
-        <ModalFooter>{footer}</ModalFooter>
+        <ModalFooter ml={0}>{footer}</ModalFooter>
       </ModalContent>
     </ChakraModal>
   );

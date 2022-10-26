@@ -1,4 +1,4 @@
-import { Image, Input, HStack, Heading } from '@chakra-ui/react';
+import { Image, Input, HStack, Heading, Box } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -49,13 +49,14 @@ export const SearchModal = ({ isOpen, onClose }) => {
   ));
 
   const header = (
-    <Input
-      type="search"
-      name="search"
-      maxLength={48}
-      placeholder={search.placeholder}
-      onChange={event => setSearchQuery(event.target.value)}
-    />
+    <Box pe={5}>
+      <Input
+        type="search"
+        name="search"
+        placeholder={search.placeholder}
+        onChange={event => setSearchQuery(event.target.value)}
+      />
+    </Box>
   );
   return (
     <Modal header={header} body={content} isOpen={isOpen} onClose={onClose} />

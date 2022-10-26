@@ -1,65 +1,17 @@
-import {
-  Flex,
-  Text,
-  Image,
-  Button,
-  HStack,
-  VStack,
-  Heading,
-  IconButton,
-} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { Flex, Image, IconButton } from '@chakra-ui/react';
 
 // images
-import slide1 from '../../assets/slide-1.png';
-import slide2 from '../../assets/slide-2.png';
+import slide1 from '../../assets/slide-1.jpg';
+import slide2 from '../../assets/slide-2.jpg';
 import slide3 from '../../assets/slide-3.jpg';
-import slide4 from '../../assets/slide-4.jpg';
-import slide5 from '../../assets/slide-5.jpg';
 
 import { Icon } from '../../components/UI/Icons';
-import { AndroidBadge } from '../../components/UI/AndroidBadge';
 
 const slidesData = [
-  {
-    id: 1,
-    img: slide1,
-    title: 'A healthy meal delivered to your door, every single day',
-    desc: 'The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.',
-    btn: (
-      <Button variant="brand" size="lg">
-        Start Eating Well
-      </Button>
-    ),
-  },
-  {
-    id: 2,
-    img: slide2,
-    title: 'On the Go',
-    desc: 'The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.',
-    btn: <AndroidBadge w="250px" opacity="85%" />,
-  },
-  {
-    id: 3,
-    img: slide3,
-    title: '',
-    desc: '',
-    btn: '',
-  },
-  {
-    id: 4,
-    img: slide4,
-    title: '',
-    desc: '',
-    btn: '',
-  },
-  {
-    id: 5,
-    img: slide5,
-    title: '',
-    desc: '',
-    btn: '',
-  },
+  { id: 1, img: slide1 },
+  { id: 2, img: slide2 },
+  { id: 3, img: slide3 },
 ];
 
 export const Slider = () => {
@@ -86,8 +38,8 @@ export const Slider = () => {
   return (
     <Flex
       as="section"
-      h="100vh"
       dir="ltr"
+      maxH="100vh"
       position="relative"
       overflow="hidden"
       bg="secondary.50"
@@ -99,6 +51,7 @@ export const Slider = () => {
         margin="auto"
         rounded="full"
         variant="ghost"
+        aria-label="arrowLeft"
         color="brand.500"
         position="absolute"
         colorScheme="blackAlpha"
@@ -113,27 +66,15 @@ export const Slider = () => {
         transform={`translateX(${slideIndex * -100}vw)`}
       >
         {slidesData.map(item => (
-          <Flex w="100vw" key={item.id}>
-            <Flex flex={1} justify="center" align="center">
-              <Image
-                h="95vh"
-                rounded="md"
-                loading="lazy"
-                src={item.img}
-                objectFit="cover"
-                fallbackSrc="https://via.placeholder.com/150"
-              />
-            </Flex>
-            {item.title && (
-              <VStack flex={1} justify="center" spacing={10} pr={20}>
-                <Heading size="3xl" letterSpacing={-0.5}>
-                  {item.title}
-                </Heading>
-                <Text fontSize="xl">{item.desc}</Text>
-                <HStack>{item.btn}</HStack>
-              </VStack>
-            )}
-          </Flex>
+          <Image
+            key={item.id}
+            w="full"
+            fit="cover"
+            loading="lazy"
+            src={item.img}
+            alt="slide image"
+            fallbackSrc="https://via.placeholder.com/150"
+          />
         ))}
       </Flex>
 
@@ -144,6 +85,7 @@ export const Slider = () => {
         margin="auto"
         rounded="full"
         variant="ghost"
+        aria-label="arrowLeft"
         color="brand.500"
         position="absolute"
         colorScheme="blackAlpha"

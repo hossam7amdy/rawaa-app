@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Formik, Form } from 'formik';
-import { VStack, Button } from '@chakra-ui/react';
+import { Button, VStack } from '@chakra-ui/react';
 
 import { VALIDATE_EMAIL, VALIDATE_PASSWORD } from '../../utils/validations';
 import { AuthContext } from '../../store/AuthContext';
@@ -32,7 +32,7 @@ export const Login = () => {
         onSubmit={formSubmitHandler}
       >
         <Form>
-          <VStack spacing={4} w="400px">
+          <VStack w={{ base: '290px', md: '500px' }} spacing={5}>
             <CustomInput
               type="email"
               name="email"

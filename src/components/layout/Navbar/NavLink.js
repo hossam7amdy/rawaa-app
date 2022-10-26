@@ -6,14 +6,14 @@ export const NavLink = ({ to, name, isActive }) => {
     <Link
       as={RouterLink}
       to={to}
-      fontWeight="bold"
       _hover={{
         borderBottomWidth: '2px',
         borderBottomColor: 'brand.500',
       }}
       borderBottom={isActive ? '2px' : ''}
-      color={isActive ? 'current' : 'gray'}
+      color={isActive ? 'secondary.500' : 'gray'}
       borderColor={isActive ? 'brand.500' : ''}
+      fontWeight={{ base: 'normal', md: 'bold' }}
     >
       {name}
     </Link>
