@@ -9,7 +9,7 @@ export const CURRENCY_FORMATER = (locale, amount) => {
   }).format(amount);
 };
 
-export const DATE_FORMATER = (locale, date) => {
+export const DATE_FORMATER = (locale, dateString) => {
   const options = {
     month: 'long',
     day: 'numeric',
@@ -17,8 +17,8 @@ export const DATE_FORMATER = (locale, date) => {
     minute: 'numeric',
   };
 
-  const dateFormat = new Date(date);
-  return new Intl.DateTimeFormat(locale, options).format(dateFormat);
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat(locale, options).format(date);
 };
 
 export const DISCOUNT_CALCULATOR = (amount, discount) => {

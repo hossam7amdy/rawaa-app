@@ -46,7 +46,7 @@ export const CartPreview = () => {
 
       <SkeletonCart isLoaded={!isLoading}>
         <Stack as={List}>
-          {items.map(item => (
+          {items?.map(item => (
             <SingleItem
               title={item.title}
               key={item.productId}

@@ -10,7 +10,7 @@ import { AuthContext } from '../../store/AuthContext';
 import { CartActions } from '../../store/CartSlice';
 import useMutateData from '../../hooks/useMutateData';
 
-export const Checkout = () => {
+const Checkout = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,7 +25,9 @@ export const Checkout = () => {
   const canPlaceOrder = !!addressId && !!totalQuantity && totalAmount < 1000;
 
   const placeOrderHandler = () => {
+    const date = new Date();
     const userId = token.user.id;
+
     const orderDetails = items.map(item => {
       return {
         drinkId: 1,
@@ -46,6 +48,7 @@ export const Checkout = () => {
         deliveryFee: 14,
         total: totalAmount,
         customerId: userId,
+        orderDate: date.toJSON(),
         deliveryAddressId: addressId,
       },
     };
@@ -69,7 +72,7 @@ export const Checkout = () => {
   return (
     <Flex
       px={2}
-      my={5}
+      mt={5}
       gap={{ base: 10, md: 5 }}
       flexDir={{ base: 'column', md: 'row' }}
     >
@@ -91,3 +94,5 @@ export const Checkout = () => {
     </Flex>
   );
 };
+
+export default Checkout;
