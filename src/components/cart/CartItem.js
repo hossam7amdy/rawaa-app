@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Button, Flex, HStack, ListItem, Text } from '@chakra-ui/react';
 
-import { CURRENCY_FORMATER } from '../../utils/helpers';
+import { CURRENCY_FORMATER, NUMBER_FORMATER } from '../../utils/helpers';
 import { AuthContext } from '../../store/AuthContext';
 import useMutateData from '../../hooks/useMutateData';
 import { PATH } from '../../data/constants';
@@ -16,13 +16,12 @@ export const CartItem = props => {
   const { token } = useContext(AuthContext);
   const { request } = useMutateData({ key: 'cart' });
 
-  const locale = token.locale;
+  const { locale } = token;
   const { productId, title, quantity, price, amount, taste, itemSize } = props;
 
   const onAddToCartHandler = () => {
-    const { quantity, ...rest } = props;
-    dispatch(CartActions.addItemToCart({ quantity: 1, ...rest }));
     const mutateItem = cart.items.find(item => item.productId === productId);
+    dispatch(CartActions.addItemToCart({ ...mutateItem, quantity: 1 }));
 
     const config = {
       method: 'post',
@@ -71,7 +70,8 @@ export const CartItem = props => {
           <Text as="b">
             {CURRENCY_FORMATER(locale, amount)}{' '}
             <Text as="i" fontWeight="normal" fontSize="sm">
-              ({CURRENCY_FORMATER(locale, price)}/{quantity})
+              ({CURRENCY_FORMATER(locale, price)}/
+              {NUMBER_FORMATER(locale, quantity)})
             </Text>
           </Text>
         </Flex>
@@ -79,7 +79,7 @@ export const CartItem = props => {
           <span>
             x
             <Text as="b" fontSize="md">
-              {quantity}
+              {NUMBER_FORMATER(locale, quantity)}
             </Text>
             <span>
               {' '}
@@ -87,13 +87,19 @@ export const CartItem = props => {
             </span>
           </span>
           <HStack>
-            <Button variant="brand" size="xs" onClick={onRemoveItemHandler}>
+            <Button
+              size="sm"
+              variant="outline"
+              colorScheme="brand"
+              onClick={onRemoveItemHandler}
+            >
               -
             </Button>
             <Button
               isDisabled={quantity === 15}
-              variant="brand"
-              size="xs"
+              size="sm"
+              variant="outline"
+              colorScheme="brand"
               onClick={onAddToCartHandler}
             >
               +

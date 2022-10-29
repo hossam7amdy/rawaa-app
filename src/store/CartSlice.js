@@ -20,20 +20,24 @@ const cartSlice = createSlice({
         item => item.productId === newItem.productId
       );
 
+      let amount;
       if (!exitingItem) {
-        state.items.push(newItem);
+        amount = +newItem.amount;
+        state.items.unshift(newItem);
       } else {
         if (exitingItem.quantity + newItem.quantity > 15) return;
+
         exitingItem.size = newItem.size;
         exitingItem.price = newItem.price;
         exitingItem.taste = newItem.taste;
         exitingItem.drinkId = newItem.drinkId;
         exitingItem.createOn = newItem.createOn;
         exitingItem.quantity += newItem.quantity;
+        amount = exitingItem.quantity * newItem.price - exitingItem.amount;
         exitingItem.amount = exitingItem.quantity * newItem.price;
       }
+      state.totalAmount += amount;
       state.totalQuantity += newItem.quantity;
-      state.totalAmount += newItem.quantity * newItem.price;
     },
     removeItemFromCart(state, action) {
       const id = action.payload;
