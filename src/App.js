@@ -1,48 +1,42 @@
-import { useDispatch } from 'react-redux';
+import { Skeleton } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import React, { Suspense, useContext } from 'react';
 
-import { useFetchById } from './hooks/useFetchById';
+import { Layout } from './components/layout/Layout';
 import { AuthContext } from './store/AuthContext';
 
-import { CartActions } from './store/CartSlice';
-import { Checkout } from './pages/Checkout/Checkout';
-import { NotFound } from './pages/NotFound';
-import { Profile } from './pages/Profile/Profile';
-import { Details } from './pages/Details/Details';
-import { Layout } from './components/layout/Layout';
-import { Meals } from './pages/Meals/Meals';
-import { Home } from './pages/Home/Home';
-import { User } from './pages/User/User';
+const Checkout = React.lazy(() => import('./pages/Checkout/Checkout'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const Profile = React.lazy(() => import('./pages/Profile/Profile'));
+const Details = React.lazy(() => import('./pages/Details/Details'));
+const Orders = React.lazy(() => import('./pages/Orders/Orders'));
+const Meals = React.lazy(() => import('./pages/Meals/Meals'));
+const Home = React.lazy(() => import('./pages/Home/Home'));
+const User = React.lazy(() => import('./pages/User/User'));
 
 export default function App() {
-  const dispatch = useDispatch();
-  const { token, isLoggedIn, lang } = useContext(AuthContext);
-  const { data } = useFetchById({ lang, key: 'cart', id: token.user?.id });
-
-  useEffect(() => {
-    if (data) {
-      dispatch(CartActions.replaceCartItems(data));
-    }
-  }, [dispatch, data]);
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <Layout>
-      <Routes>
-        {!isLoggedIn && <Route path="user" element={<User />} />}
-        <Route path="/" element={<Home />} />
-        <Route path="menu">
-          <Route index element={<Meals />} />
-          <Route path=":id" element={<Meals />} />
-        </Route>
-        <Route path="meal">
-          <Route path=":id" element={<Details />} />
-        </Route>
-        <Route path="profile" element={<Profile />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="not-found" element={<NotFound />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<Skeleton />}>
+        <Routes>
+          {!isLoggedIn && <Route path="user" element={<User />} />}
+          {isLoggedIn && <Route path="orders" element={<Orders />} />}
+          {isLoggedIn && <Route path="profile" element={<Profile />} />}
+          {isLoggedIn && <Route path="checkout" element={<Checkout />} />}
+          <Route path="/" element={<Home />} />
+          <Route path="menu">
+            <Route index element={<Meals />} />
+            <Route path=":id" element={<Meals />} />
+          </Route>
+          <Route path="meal">
+            <Route path=":id" element={<Details />} />
+          </Route>
+          <Route path="not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </Layout>
   );
 }
