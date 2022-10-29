@@ -1,6 +1,12 @@
-import { Flex, Divider, IconButton, useDisclosure } from '@chakra-ui/react';
+import {
+  Flex,
+  Stack,
+  Divider,
+  IconButton,
+  useDisclosure,
+} from '@chakra-ui/react';
 
-import { LaguageSwitcher } from './LaguageSwitcher';
+import { LanguageSelector } from './LanguageSelector';
 import { HeaderMenuList } from './HeaderMenuList';
 import { AuthContext } from '../../../store/AuthContext';
 import { useContext } from 'react';
@@ -14,8 +20,8 @@ import { Link } from './Link';
 
 export const MobileHeader = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-
   const { isLoggedIn, token } = useContext(AuthContext);
+
   const { user } = token.translation.header;
 
   const header = (
@@ -26,7 +32,12 @@ export const MobileHeader = () => {
     </>
   );
   const body = <Navbar ignore={true} />;
-  const footer = <LaguageSwitcher />;
+  const footer = (
+    <Stack w="full" align="start">
+      <Divider />
+      <LanguageSelector />
+    </Stack>
+  );
 
   return (
     <>
@@ -36,12 +47,10 @@ export const MobileHeader = () => {
         footer={footer}
         isOpen={isOpen}
         onClose={onClose}
-        color="red"
       />
       <Flex
         as="header"
-        w="full"
-        h="50px"
+        h="60px"
         shadow="md"
         align="center"
         color="brand.500"
@@ -49,7 +58,7 @@ export const MobileHeader = () => {
         justify="space-between"
       >
         <IconButton
-          icon={<Icon name="menu" />}
+          icon={<Icon name="menu" boxSize={5} />}
           aria-label="menu"
           variant="none"
           onClick={onOpen}
