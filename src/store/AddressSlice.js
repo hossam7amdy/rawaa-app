@@ -12,7 +12,7 @@ const addressSlice = createSlice({
       state.addressList = [];
     },
     addAddressToList(state, action) {
-      state.addressList.push(action.payload);
+      state.addressList.unshift(action.payload);
     },
     removeAddressFromList(state, action) {
       const addressId = action.payload;

@@ -6,7 +6,7 @@ import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
 export const Description = ({ product, price }) => {
   const { token } = useContext(AuthContext);
 
-  const locale = { token };
+  const { locale } = token;
   const { kcal } = token.translation.productDetails;
 
   const hasDiscount = product?.discountValue !== 0;

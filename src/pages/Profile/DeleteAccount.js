@@ -7,11 +7,14 @@ import { AlertModal } from '../../components/UI/AlertModal';
 import useMutateData from '../../hooks/useMutateData';
 import CustomInput from '../../components/form/CustomInput';
 import { PATH } from '../../data/constants';
+import { useDispatch } from 'react-redux';
+import { CartActions } from '../../store/CartSlice';
 
 export const DeleteAccount = () => {
   const { token, logout } = useContext(AuthContext);
   const [isDisabled, setIsDisabled] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
   const { isLoading, request } = useMutateData({ key: 'user' });
 
   const { deleteBtn, closeBtn } = token.translation;
@@ -29,6 +32,7 @@ export const DeleteAccount = () => {
     request(config).then(() => {
       logout();
       onClose();
+      dispatch(CartActions.clearCart());
     });
   };
 
