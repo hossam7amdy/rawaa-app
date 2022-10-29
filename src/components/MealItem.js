@@ -1,24 +1,25 @@
-import { useContext } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
   Text,
   Flex,
-  Image,
   HStack,
   Heading,
   ListItem,
   IconButton,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
-import { CartActions } from '../../store/CartSlice';
-import { AuthContext } from '../../store/AuthContext';
-import useMutateData from '../../hooks/useMutateData';
-import { PATH } from '../../data/constants';
-import { Icon } from '../../components/UI/Icons';
+import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../utils/helpers';
+import { FavoriteActions } from '../store/FavoriteSlice';
+import { ImagePreview } from './UI/ImagePreview';
+import { CartActions } from '../store/CartSlice';
+import { AuthContext } from '../store/AuthContext';
+import useMutateData from '../hooks/useMutateData';
+import { PATH } from '../data/constants';
+import { Icon } from './UI/Icons';
 
-export const MealItem = ({ item }) => {
+export const MealItem = ({ item, ...props }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { request } = useMutateData({ key: 'cart' });
@@ -40,31 +41,32 @@ export const MealItem = ({ item }) => {
       quantity: 1,
       amount: price,
       productId: item.id,
-      createOn: createOn.toISOString(),
+      createOn: createOn.toJSON(),
       customerId: token.user.id,
     };
 
     request({ method: 'post', data });
     dispatch(CartActions.addItemToCart(data));
+    dispatch(FavoriteActions.removeFromFavorite({ id: item.id }));
   };
 
   return (
     <Flex
       as={ListItem}
-      w={{ base: 'full', md: '2xs' }}
       shadow="md"
       rounded="md"
+      {...props}
+      w={{ base: 'full', md: 'xs' }}
     >
       <Flex flex={1}>
-        <Image
-          fit="cover"
-          {...rounded}
+        <ImagePreview
+          ratio={1}
           boxSize="full"
           cursor="pointer"
+          rounded={rounded}
           alt={item?.title}
           src={PATH.FILE + item?.image}
-          fallbackSrc="https://via.placeholder.com/150"
-          onClick={() => navigate(`/meal/${item.title}-${item.id}`)}
+          onClick={() => navigate(`/meal/${item.id}`)}
         />
       </Flex>
       <Flex
@@ -92,7 +94,7 @@ export const MealItem = ({ item }) => {
             aria-label="view icon"
             size={{ base: 'sm', md: 'md' }}
             icon={<Icon name="view" />}
-            onClick={() => navigate(`/meal/${item.title}-${item.id}`)}
+            onClick={() => navigate(`/meal/${item.id}`)}
           />
         </HStack>
       </Flex>
