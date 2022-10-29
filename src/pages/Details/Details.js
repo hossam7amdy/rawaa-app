@@ -1,6 +1,5 @@
 import {
   Text,
-  Image,
   Stack,
   Spacer,
   HStack,
@@ -15,10 +14,11 @@ import { useContext, useEffect, useReducer } from 'react';
 
 import { CURRENCY_FORMATER, DISCOUNT_CALCULATOR } from '../../utils/helpers';
 import { PATH, SIZE_PRICE_MAPPER } from '../../data/constants';
-import { QuantitiyControl } from './QuantitiyControl';
+import { QuantityControl } from './QuantityControl';
 import { FavoriteButton } from './FavoriteButton';
 import { TasteControl } from './TasteControl';
 import { useFetchById } from '../../hooks/useFetchById';
+import { ImagePreview } from '../../components/UI/ImagePreview';
 import { AuthContext } from '../../store/AuthContext';
 import { SizeControl } from './SizeControl';
 import { Description } from './Description';
@@ -47,7 +47,7 @@ const reducer = (state, action) => {
   }
 };
 
-export const Details = () => {
+const Details = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,24 +56,23 @@ export const Details = () => {
 
   const locale = token.locale;
   const { button } = token.translation.productDetails;
-  const productId = id.split('-')[1];
 
   const { request } = useMutateData({ key: 'cart' });
   const {
-    isError,
+    error,
     isLoading,
     data: product,
   } = useFetchById({
+    id,
     lang,
     key: 'product',
-    id: productId,
   });
 
   useEffect(() => {
-    if (isError || !productId) {
+    if (error) {
       navigate('/not-found', { replace: true });
     }
-  }, [isError, productId, navigate]);
+  }, [error, navigate]);
 
   useEffect(() => {
     if (product) {
@@ -84,7 +83,7 @@ export const Details = () => {
     }
   }, [product, orderState.size]);
 
-  const orderSubmitHandler = () => {
+  const addToCartHandler = () => {
     const price = DISCOUNT_CALCULATOR(orderState.price, product.discountValue);
     const createOn = new Date();
 
@@ -97,7 +96,7 @@ export const Details = () => {
       productId: product.id,
       taste: orderState.taste,
       customerId: token.user.id,
-      createOn: createOn.toISOString(),
+      createOn: createOn.toJSON(),
       quantity: orderState.quantity,
       amount: price * orderState.quantity,
     };
@@ -111,26 +110,23 @@ export const Details = () => {
   return (
     <Skeleton isLoaded={!isLoading} fadeDuration={1}>
       <SimpleGrid
-        px={2}
-        my={5}
-        gap={2}
+        px={5}
+        mt={5}
+        mb={20}
         mx="auto"
+        gap={5}
         columns={{ base: 1, md: 2 }}
         maxW={{ base: 'full', md: '1024px' }}
       >
         <GridItem>
-          <Image
-            maxH="70vh"
-            fit="cover"
-            rounded="md"
-            boxSize="full"
+          <ImagePreview
+            ratio={1}
             alt={product?.title}
-            src={product ? PATH.FILE + product.image : ''}
-            fallbackSrc="https://via.placeholder.com/150"
+            src={product ? PATH.FILE + product.image : null}
           />
         </GridItem>
 
-        <GridItem as={Stack} justify="space-between">
+        <GridItem as={Stack} spacing={5}>
           <Description product={product} price={orderState.price} />
           <SizeControl product={product} dispatch={dispatchOrder} />
           <TasteControl
@@ -138,18 +134,18 @@ export const Details = () => {
             taste={orderState.taste}
             dispatch={dispatchOrder}
           />
-          <QuantitiyControl dispatch={dispatchOrder} />
+          <QuantityControl dispatch={dispatchOrder} />
           <HStack>
             <Button
               variant="brand"
               isDisabled={
                 !isLoggedIn || orderState.price * orderState.quantity > 999
               }
-              onClick={orderSubmitHandler}
+              onClick={addToCartHandler}
             >
               {button}
             </Button>
-            <FavoriteButton />
+            <FavoriteButton product={product} />
             <Spacer />
             <Text as="b">
               {CURRENCY_FORMATER(
@@ -163,3 +159,5 @@ export const Details = () => {
     </Skeleton>
   );
 };
+
+export default Details;
