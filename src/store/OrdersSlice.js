@@ -13,7 +13,7 @@ const ordersSlice = createSlice({
     },
     addNewOrder(state, action) {
       const order = action.payload;
-      state.orders.push(order);
+      state.orders.unshift(order);
     },
     modifyOrderState(state, action) {
       const orderId = action.payload;

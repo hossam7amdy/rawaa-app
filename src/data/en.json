@@ -75,13 +75,7 @@
     }
   },
   "orders": {
-    "states": {
-      "1": "Pending",
-      "2": "Processing",
-      "3": "Rejected",
-      "4": "Completed",
-      "5": "Canceled"
-    }
+    "states": ["Pending", "Processing", "Rejected", "Completed", "Canceled"]
   },
   "validation": {
     "required": "Required",
@@ -119,6 +113,8 @@
       "modalHeaderText": "Delete Account"
     }
   },
+  "filter": "Filter",
+  "favorite": "Favorite Meals 😋",
   "btnLoadingText": "Loading",
   "saveBtn": "Save",
   "confirmBtn": "Confirm",
