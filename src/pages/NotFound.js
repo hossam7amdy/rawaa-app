@@ -1,9 +1,11 @@
-import { Heading, Flex } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 
-export const NotFound = () => {
+const NotFound = () => {
   return (
-    <Flex justify="center" my={20}>
-      <Heading size="lg">404 | Not Found</Heading>
-    </Flex>
+    <Heading size="lg" textAlign="center" mt={20}>
+      404 | Not Found
+    </Heading>
   );
 };
+
+export default NotFound;

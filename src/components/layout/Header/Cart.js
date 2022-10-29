@@ -19,16 +19,19 @@ export const Cart = () => {
   return (
     <>
       <CartModal onClose={onClose} isOpen={isOpen} />
-      <Button variant="none" pos="relative" onClick={onOpen}>
-        <Icon name="cart" />
+      <Button
+        pos="relative"
+        variant="unstyled"
+        aria-label="cart"
+        onClick={onOpen}
+      >
+        <Icon name="cart" boxSize={5} />
         {hasItems && (
           <Text
-            h={4}
-            w={4}
-            top={1}
+            top={-1}
             bg="red"
-            right={1}
-            fontSize="xs"
+            boxSize={5}
+            fontSize="sm"
             color="black"
             pos="absolute"
             rounded="full"

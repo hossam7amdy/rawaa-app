@@ -20,9 +20,9 @@ export const SearchBox = () => {
     <>
       <SearchModal isOpen={isOpen} onClose={onClose} />
       <IconButton
-        icon={<Icon name="search" />}
+        icon={<Icon name="search" boxSize={5} />}
         display={{ base: 'block', lg: 'none' }}
-        variant="none"
+        variant="unstyled"
         onClick={onOpen}
         aria-label="search"
       />

@@ -1,28 +1,29 @@
 import React from 'react';
-import { Container, useMediaQuery } from '@chakra-ui/react';
+import { Box, useMediaQuery } from '@chakra-ui/react';
 
 import { ScrollToTopWrapper } from '../UI/ScrollToTopWrapper';
 
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
 import { MobileHeader } from './Header/MobileHeader';
+import { ContentLoader } from './ContentLoader';
 
 export const Layout = ({ children }) => {
   const [isMobile] = useMediaQuery('(max-width: 905px)');
 
   return (
     <ScrollToTopWrapper>
+      <ContentLoader />
       {isMobile ? <MobileHeader /> : <Header />}
-      <Container
+      <Box
         as="main"
-        p={0}
-        minW="100vw"
+        mb={20}
         minH="70vh"
         overflowX="hidden"
-        my={isMobile ? '0' : '70px'}
+        mt={isMobile ? '0' : '70px'}
       >
         {children}
-      </Container>
+      </Box>
       <Footer />
     </ScrollToTopWrapper>
   );

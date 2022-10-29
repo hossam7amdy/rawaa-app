@@ -1,8 +1,9 @@
-import { Image, Input, HStack, Heading, Box } from '@chakra-ui/react';
+import { Input, HStack, Heading, Box } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useFetchById } from '../../../hooks/useFetchById';
+import { ImagePreview } from '../../UI/ImagePreview';
 import { AuthContext } from '../../../store/AuthContext';
 import { PATH } from '../../../data/constants';
 import { Modal } from '../../UI/Modal';
@@ -37,13 +38,10 @@ export const SearchModal = ({ isOpen, onClose }) => {
       }}
     >
       <Heading size="md">{item.title}</Heading>
-      <Image
-        fit="cover"
-        rounded="md"
+      <ImagePreview
         boxSize={12}
         src={PATH.FILE + item?.image}
         alt={item?.title}
-        fallbackSrc="https://via.placeholder.com/150"
       />
     </HStack>
   ));

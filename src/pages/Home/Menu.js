@@ -16,11 +16,11 @@ export const Menu = () => {
   const { ourMenu } = token.translation.home;
 
   return (
-    <VStack as="section" spacing={5} my={20}>
+    <VStack as="section" spacing={5} mt={20}>
       <Heading>{ourMenu.title}</Heading>
 
       <Skeleton minH="100vh" isLoaded={!isLoading} fadeDuration={1}>
-        <Flex as={List} flexWrap="wrap" justifyContent="center" gap={3}>
+        <Flex as={List} flexWrap="wrap" justifyContent="center" gap={5}>
           {categories?.map(item => (
             <MenuItem key={item.id} item={item} />
           ))}

@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Flex, Image, ListItem, Text } from '@chakra-ui/react';
+import { Flex, Heading, ListItem } from '@chakra-ui/react';
 
 import { PATH } from '../../data/constants';
+import { ImagePreview } from '../../components/UI/ImagePreview';
 
 export const MenuItem = ({ item }) => {
   const navigate = useNavigate();
@@ -13,34 +14,24 @@ export const MenuItem = ({ item }) => {
       rounded="md"
       pos="relative"
       cursor="pointer"
+      justify="center"
       overflow="hidden"
-      boxSize={{ base: '95vw', md: 'xs', '2xl': 'lg' }}
+      boxSize={{ base: '80vw', md: 'xs', '2xl': 'lg' }}
       onClick={() => navigate(`/menu/${item.id}`)}
     >
-      <Text
-        as="b"
-        pt={5}
-        w="full"
-        fontSize={20}
-        pos="absolute"
-        display="flex"
-        justifyContent="center"
-      >
+      <Heading top="30%" pos="absolute" display="flex">
         {item.title}
-      </Text>
-      <Image
-        fit="cover"
-        rounded="md"
+      </Heading>
+      <ImagePreview
+        ratio={1}
         boxSize="full"
-        zIndex={2}
-        src={PATH.FILE + item?.image}
         alt={item.title}
+        src={PATH.FILE + item?.image}
         _hover={{
-          opacity: '30%',
+          opacity: '25%',
           transform: 'scale(1.1)',
           transition: 'all 0.4s',
         }}
-        fallbackSrc="https://via.placeholder.com/150"
       />
     </Flex>
   );

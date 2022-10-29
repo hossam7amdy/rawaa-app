@@ -1,24 +1,17 @@
-import {
-  Flex,
-  Text,
-  Image,
-  Stack,
-  VStack,
-  Heading,
-  ListItem,
-  AspectRatio,
-} from '@chakra-ui/react';
 import { useContext } from 'react';
+import { Flex, Text, Stack, VStack, Heading, ListItem } from '@chakra-ui/react';
 
-import { AuthContext } from '../../store/AuthContext';
 import {
-  CURRENCY_FORMATER,
   DATE_FORMATER,
   NUMBER_FORMATER,
+  CURRENCY_FORMATER,
 } from '../../utils/helpers';
+import { ImagePreview } from '../../components/UI/ImagePreview';
+import { AuthContext } from '../../store/AuthContext';
 
 export const SingleItem = ({ title, image, quantity, amount, createOn }) => {
   const { token } = useContext(AuthContext);
+
   const { locale } = token;
   const { item } = token.translation.checkout;
 
@@ -26,9 +19,7 @@ export const SingleItem = ({ title, image, quantity, amount, createOn }) => {
     <ListItem bg="gray.50" rounded="md" p={2}>
       <Flex gap={5}>
         <VStack spacing={0}>
-          <AspectRatio ratio={1} w={20}>
-            <Image src={image} />
-          </AspectRatio>
+          <ImagePreview src={image} alt={title} ratio={1} w={20} />
           <Text color="gray.600">
             {NUMBER_FORMATER(locale, quantity)} {item}
           </Text>

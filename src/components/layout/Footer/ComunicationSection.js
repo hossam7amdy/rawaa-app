@@ -1,5 +1,12 @@
 import { useContext } from 'react';
-import { Button, Flex, Heading, IconButton } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Stack,
+  Button,
+  Heading,
+  IconButton,
+} from '@chakra-ui/react';
 
 import { Icon } from '../../UI/Icons';
 import { AuthContext } from '../../../store/AuthContext';
@@ -9,16 +16,11 @@ export const ComunicationSection = () => {
   const { footer } = token.translation;
 
   return (
-    <Flex
-      flexDir="column"
-      w="full"
-      gap={5}
-      align={{ base: 'center', md: 'start' }}
-    >
+    <Stack h="full" justify="space-around">
       <Button
         fontSize="xl"
         variant="link"
-        colorScheme="current"
+        colorScheme="none"
         leftIcon={<Icon name="location" />}
         _hover={{
           opacity: '70%',
@@ -28,8 +30,10 @@ export const ComunicationSection = () => {
         {footer.locations}
       </Button>
 
-      <Flex flexDir="column" align="center">
-        <Heading size="sm">{footer['contact-us']}</Heading>
+      <Box>
+        <Heading size="sm" textAlign="center" mb={2}>
+          {footer['contact-us']}
+        </Heading>
         <Flex gap={5}>
           <IconButton
             aria-label="phone icon"
@@ -59,7 +63,7 @@ export const ComunicationSection = () => {
             children={<Icon name="whatsapp" boxSize={6} />}
           />
         </Flex>
-      </Flex>
-    </Flex>
+      </Box>
+    </Stack>
   );
 };

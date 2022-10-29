@@ -11,7 +11,7 @@ import {
 import React, { useContext } from 'react';
 import { AuthContext } from '../../store/AuthContext';
 
-export const Drawer = ({ header, body, footer, isOpen, onClose, ...props }) => {
+export const Drawer = ({ header, body, footer, isOpen, onClose }) => {
   const btnRef = React.useRef();
   const { lang } = useContext(AuthContext);
 
@@ -24,7 +24,6 @@ export const Drawer = ({ header, body, footer, isOpen, onClose, ...props }) => {
       onClose={onClose}
       finalFocusRef={btnRef}
       placement={placement}
-      {...props}
     >
       <DrawerOverlay />
       <DrawerContent>

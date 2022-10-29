@@ -15,7 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '../../UI/Icons';
 import { AuthContext } from '../../../store/AuthContext';
 import { CartActions } from '../../../store/CartSlice';
-import { OrdersModal } from '../../orders/OrdersModal';
+import { FavoriteModal } from '../../favorite/FavoriteModal';
+import { FavoriteActions } from '../../../store/FavoriteSlice';
 
 export const HeaderMenuList = () => {
   const navigate = useNavigate();
@@ -29,11 +30,17 @@ export const HeaderMenuList = () => {
   const isArabic = lang === 'ar';
   const { menu } = token.translation.header;
   const firstName = token.user.fullName.split(' ')[0];
-  const mobileIcon = isArabic ? 'chevronLeft' : 'chevronRight';
+  const mobileIcon = isArabic ? 'arrowLeft' : 'arrowRight';
+
+  const logoutHandler = () => {
+    dispatch(CartActions.clearCart());
+    dispatch(FavoriteActions.clearFavoriteList());
+    logout();
+  };
 
   return (
     <>
-      <OrdersModal isOpen={isOpen} onClose={onClose} />
+      <FavoriteModal isOpen={isOpen} onClose={onClose} />
       <Menu isLazy>
         <MenuButton
           as={Button}
@@ -42,10 +49,13 @@ export const HeaderMenuList = () => {
           fontWeight="bold"
           minW="min-content"
           colorScheme={isMobile ? 'secondary' : 'brand'}
-          rightIcon={<Icon name={isMobile ? mobileIcon : 'dropdownMenu'} />}
+          rightIcon={
+            <Icon name={isMobile ? mobileIcon : 'dropdownMenu'} boxSize={6} />
+          }
         >
           {menu.buttonText} {firstName}
         </MenuButton>
+
         <MenuList fontSize="lg" color="secondary.500">
           <MenuItem
             justifyContent={{ base: 'center', lg: 'start' }}
@@ -55,21 +65,18 @@ export const HeaderMenuList = () => {
           </MenuItem>
           <MenuItem
             justifyContent={{ base: 'center', lg: 'start' }}
-            onClick={onOpen}
+            onClick={() => navigate('orders')}
           >
             {menu.list[1]}
           </MenuItem>
-          <MenuItem justifyContent={{ base: 'center', lg: 'start' }}>
+          <MenuItem
+            justifyContent={{ base: 'center', lg: 'start' }}
+            onClick={onOpen}
+          >
             {menu.list[2]}
           </MenuItem>
           <MenuDivider />
-          <MenuItem
-            justifyContent="center"
-            onClick={() => {
-              dispatch(CartActions.clearCart());
-              logout();
-            }}
-          >
+          <MenuItem justifyContent="center" onClick={logoutHandler}>
             {menu.logout}
           </MenuItem>
         </MenuList>

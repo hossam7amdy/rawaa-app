@@ -10,10 +10,10 @@ export const NavLink = ({ to, name, isActive }) => {
         borderBottomWidth: '2px',
         borderBottomColor: 'brand.500',
       }}
-      borderBottom={isActive ? '2px' : ''}
-      color={isActive ? 'secondary.500' : 'gray'}
-      borderColor={isActive ? 'brand.500' : ''}
+      borderBottom={isActive ? '2px' : null}
       fontWeight={{ base: 'normal', md: 'bold' }}
+      borderColor={isActive ? 'brand.500' : null}
+      color={{ base: 'black', lg: isActive ? 'secondary.500' : 'gray' }}
     >
       {name}
     </Link>

@@ -10,17 +10,19 @@ import { Modal } from '../UI/Modal';
 
 export const CartModal = ({ onClose, isOpen }) => {
   const navigate = useNavigate();
-  const cart = useSelector(state => state.cart);
   const { token } = useContext(AuthContext);
+  const { items, totalAmount } = useSelector(state => state.cart);
 
-  const hasItems = cart.items.length > 0;
+  const { locale } = token;
+
+  const hasItems = items.length > 0;
   const { cartModal, closeBtn } = token.translation;
   const { tasteMapper, sizeMapper } = token.translation.productDetails;
 
   const header = cartModal.title;
   const body = (
     <List>
-      {cart.items.map(item => (
+      {items.map(item => (
         <CartItem
           {...item}
           key={item.productId}
@@ -34,14 +36,12 @@ export const CartModal = ({ onClose, isOpen }) => {
   const footer = (
     <Stack w="full">
       <Flex justify="space-between">
-        <Heading size={{ base: 'sm', md: 'md' }}>{cartModal.total}</Heading>
-        <Heading size={{ base: 'sm', md: 'md' }}>
-          {CURRENCY_FORMATER(token.locale, cart.totalAmount)}
-        </Heading>
+        <Heading size="md">{cartModal.total}</Heading>
+        <Heading size="md">{CURRENCY_FORMATER(locale, totalAmount)}</Heading>
       </Flex>
       <Flex gap={{ base: 1, md: 2 }}>
         <Button
-          size={{ base: 'sm', md: 'md' }}
+          size="md"
           variant="outline"
           colorScheme="brand"
           onClick={onClose}
@@ -51,8 +51,8 @@ export const CartModal = ({ onClose, isOpen }) => {
 
         {hasItems && (
           <Button
-            size={{ base: 'sm', md: 'md' }}
-            isDisabled={cart.totalAmount > 999}
+            size="md"
+            isDisabled={totalAmount > 999}
             variant="brand"
             onClick={() => {
               onClose();

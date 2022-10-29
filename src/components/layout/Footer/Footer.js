@@ -13,8 +13,10 @@ export const Footer = () => {
       as="footer"
       px={2}
       py={5}
-      gap={10}
+      minH="175px"
       columns={4}
+      justifyItems="center"
+      gap={{ base: 10, md: 0 }}
       bg="secondary.50"
     >
       <GridItem colSpan={colSpan}>
