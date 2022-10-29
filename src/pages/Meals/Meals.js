@@ -1,14 +1,15 @@
-import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
 import { Flex, List, Skeleton, Stack, useMediaQuery } from '@chakra-ui/react';
 
 import { useFetchById } from '../../hooks/useFetchById';
 import { AuthContext } from '../../store/AuthContext';
-import { MealItem } from './MealItem';
+import { MealItem } from '../../components/MealItem';
 import { Navbar } from '../../components/layout/Navbar/Navbar';
 
-export const Meals = () => {
+const Meals = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { lang } = useContext(AuthContext);
   const [isMobile] = useMediaQuery('(max-width: 905px)');
   const { isLoading, data: products } = useFetchById({
@@ -17,16 +18,25 @@ export const Meals = () => {
     lang,
   });
 
+  useEffect(() => {
+    const notFound = products?.length === 0;
+    if (notFound) {
+      navigate('/not-found', { replace: true });
+    }
+  }, [products, navigate]);
+
   return (
-    <Stack px={5} my={2}>
+    <Stack mt={5} px={5}>
       {!isMobile && <Navbar />}
       <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-        <Flex as={List} wrap="wrap" gap={2} rowGap={3}>
-          {products?.map((item, idx) => (
-            <MealItem key={idx} item={item} />
+        <Flex as={List} wrap="wrap" gap={5}>
+          {products?.map(item => (
+            <MealItem key={item.id} item={item} />
           ))}
         </Flex>
       </Skeleton>
     </Stack>
   );
 };
+
+export default Meals;

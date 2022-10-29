@@ -6,12 +6,12 @@ import { AuthContext } from '../../store/AuthContext';
 import { EditName } from './EditName';
 import { EditMail } from './EditMail';
 
-export const Profile = () => {
+const Profile = () => {
   const { token } = useContext(AuthContext);
   const { title, text } = token.translation.edit.profile;
 
   return (
-    <Flex flexDir="column" px={{ base: 2, md: 5 }} my={5}>
+    <Flex flexDir="column" px={{ base: 2, md: 5 }} mt={5}>
       <Heading size="xl">{title}</Heading>
       <Text>{text}</Text>
       <VStack p={3} my={3} spacing={10} rounded="md" bg="gray.50">
@@ -22,3 +22,5 @@ export const Profile = () => {
     </Flex>
   );
 };
+
+export default Profile;

@@ -2,7 +2,7 @@ import { Menu } from './Menu';
 import { Slider } from './Slider';
 // import { Feature } from './Feature';
 
-export const Home = () => {
+const Home = () => {
   return (
     <>
       <Slider />
@@ -11,3 +11,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home;

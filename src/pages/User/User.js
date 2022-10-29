@@ -5,18 +5,18 @@ import { Login } from './Login';
 import { Register } from './Register';
 import { AuthContext } from '../../store/AuthContext';
 
-export const User = () => {
+const User = () => {
   const { token } = useContext(AuthContext);
   const { login, register } = token.translation.user;
 
   return (
     <Tabs
-      mx={{ base: 2, md: 10 }}
-      my={5}
+      mt={5}
       isFitted
       rounded="md"
       bg="gray.50"
       variant="enclosed"
+      mx={{ base: 2, md: 10 }}
       colorScheme="secondary"
     >
       <TabList mb="1em">
@@ -34,3 +34,5 @@ export const User = () => {
     </Tabs>
   );
 };
+
+export default User;
