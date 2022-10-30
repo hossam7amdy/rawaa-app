@@ -19,7 +19,7 @@ export const MenuItem = ({ item }) => {
       boxSize={{ base: '80vw', md: 'xs', '2xl': 'lg' }}
       onClick={() => navigate(`/menu/${item.id}`)}
     >
-      <Heading top="30%" pos="absolute" display="flex">
+      <Heading top="30%" pos="absolute" display="flex" px={5}>
         {item.title}
       </Heading>
       <ImagePreview

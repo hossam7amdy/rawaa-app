@@ -59,9 +59,8 @@ export const Slider = () => {
         {slidesData.map(item => (
           <ImagePreview
             rounded={true}
-            ratio={16 / 9}
+            ratio={16 / 8}
             minW="100vw"
-            maxH="90vh"
             key={item.id}
             src={item.img}
             alt="slide image"

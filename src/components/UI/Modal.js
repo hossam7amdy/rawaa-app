@@ -7,7 +7,7 @@ import {
   ModalCloseButton,
   Modal as ChakraModal,
 } from '@chakra-ui/react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { SCROLLBAR_STYLE } from '../../data/constants';
 import { AuthContext } from '../../store/AuthContext';
 
@@ -24,6 +24,7 @@ export const Modal = props => {
       onClose={onClose}
       scrollBehavior="inside"
       blockScrollOnMount={false}
+      autoFocus={true}
       {...rest}
     >
       <ModalOverlay />
