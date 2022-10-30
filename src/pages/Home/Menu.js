@@ -3,25 +3,22 @@ import { Heading, VStack, Flex, List, Skeleton } from '@chakra-ui/react';
 
 import { MenuItem } from './MenuItem';
 import { AuthContext } from '../../store/AuthContext';
-import { useFetchById } from '../../hooks/useFetchById';
+import { useSelector } from 'react-redux';
 
 export const Menu = () => {
-  const { token, lang } = useContext(AuthContext);
-  const { isLoading, data: categories } = useFetchById({
-    lang,
-    id: 'all',
-    key: 'categories',
-  });
+  const { token } = useContext(AuthContext);
+  const { menuList } = useSelector(state => state.menu);
 
   const { ourMenu } = token.translation.home;
+  const isLoaded = menuList.length !== 0;
 
   return (
     <VStack as="section" spacing={5} mt={20}>
       <Heading>{ourMenu.title}</Heading>
 
-      <Skeleton minH="100vh" isLoaded={!isLoading} fadeDuration={1}>
+      <Skeleton isLoaded={isLoaded} fadeDuration={1} minH="50vh">
         <Flex as={List} flexWrap="wrap" justifyContent="center" gap={5}>
-          {categories?.map(item => (
+          {menuList.map(item => (
             <MenuItem key={item.id} item={item} />
           ))}
         </Flex>

@@ -7,10 +7,9 @@ export const ImagePreview = ({ src, alt, rounded, ...props }) => {
         src={src}
         alt={alt}
         fit="cover"
-        {...rounded}
-        loading="lazy"
         rounded={rounded ? null : 'md'}
-        fallbackSrc="https://via.placeholder.com/150"
+        fallbackSrc="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+        {...rounded}
       />
     </AspectRatio>
   );

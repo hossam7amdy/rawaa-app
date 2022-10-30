@@ -37,7 +37,7 @@
     "sizeMapper": ["صغير", "متوسط", "كبير"],
     "tasteMapper": ["عادى", "حار"],
     "quantityLabel": "أختر العدد",
-    "button": "أضف للسلة"
+    "addToCartBtn": "أضف للسلة"
   },
   "cartModal": {
     "title": "منتجات السلة",

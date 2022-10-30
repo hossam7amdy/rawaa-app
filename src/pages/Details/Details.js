@@ -55,7 +55,7 @@ const Details = () => {
   const [orderState, dispatchOrder] = useReducer(reducer, initialState);
 
   const locale = token.locale;
-  const { button } = token.translation.productDetails;
+  const { addToCartBtn } = token.translation.productDetails;
 
   const { request } = useMutateData({ key: 'cart' });
   const {
@@ -143,7 +143,7 @@ const Details = () => {
               }
               onClick={addToCartHandler}
             >
-              {button}
+              {addToCartBtn}
             </Button>
             <FavoriteButton product={product} />
             <Spacer />
