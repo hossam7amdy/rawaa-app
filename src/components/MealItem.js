@@ -55,8 +55,8 @@ export const MealItem = ({ item, ...props }) => {
       as={ListItem}
       shadow="md"
       rounded="md"
-      {...props}
       w={{ base: 'full', md: 'xs' }}
+      {...props}
     >
       <Flex flex={1}>
         <ImagePreview
@@ -76,8 +76,8 @@ export const MealItem = ({ item, ...props }) => {
         flexDir="column"
         justify={{ base: 'space-evenly', md: 'space-between' }}
       >
-        <Heading size="md">{item.title}</Heading>
-        <Text fontWeight="medium" fontSize={{ base: 'md', md: 'xl' }}>
+        <Heading size="sm">{item.title}</Heading>
+        <Text as="b" fontSize={{ base: 'sm', md: 'md' }}>
           {CURRENCY_FORMATER(locale, item.smallSizePrice)}
         </Text>
         <HStack>

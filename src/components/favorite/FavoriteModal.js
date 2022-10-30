@@ -16,12 +16,14 @@ export const FavoriteModal = ({ isOpen, onClose }) => {
     <List>
       {favoriteList.map(item => (
         <MealItem
-          key={item.id}
+          mb={2}
           item={item}
-          w="full"
           maxH={32}
-          bg="gray.100"
-          mb={4}
+          minW="full"
+          bg="gray.50"
+          shadow="none"
+          border="1px"
+          key={item.id}
         />
       ))}
     </List>
