@@ -13,4 +13,10 @@ An online food ordering system is a web-based application that stimulates the fo
 - Place/Cancel an order
 - Track orders status
 
+## Upcoming Features
+
+- Email/Phone verification
+- Reset forgotten password
+- Payment methods
+
 _happy eating :)_
