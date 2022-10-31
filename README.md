@@ -4,9 +4,12 @@ An online food ordering system is a web-based application that stimulates the fo
 
 ## Features
 
-- User can create an account
+- App is fully responsive to Mobile and small devices
+- App support Arabic and English languages
+- User can Search for product by name (Arabic/English)
+- User can create/Update/Delete an account
 - Add/Remove Meals to/from cart
-- Mark meal as favorite
+- Mark/Unmark/Move favorite meals
 - Place/Cancel an order
 - Track orders status
 
