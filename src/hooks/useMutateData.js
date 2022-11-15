@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
 import { PATH } from '../data/constants';
@@ -16,29 +16,32 @@ export const useMutateData = ({ key }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const request = async options => {
-    if (!options) return;
+  const request = useCallback(
+    async options => {
+      if (!options) return;
 
-    setIsLoading(true);
-    try {
-      const response = await queryFn[key](options);
-      return response.data;
-    } catch (err) {
-      const message = err?.response?.data?.message || err.message;
-      toast({
-        title: 'Failed',
-        description: message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
-      setError(message);
-      throw new Error(message || 'something went wrong');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      setIsLoading(true);
+      try {
+        const response = await queryFn[key](options);
+        return response.data;
+      } catch (err) {
+        const message = err?.response?.data?.message || err.message;
+        toast({
+          title: 'Failed',
+          description: message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top',
+        });
+        setError(message);
+        throw new Error(message || 'something went wrong');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [key, toast]
+  );
 
   return {
     error,

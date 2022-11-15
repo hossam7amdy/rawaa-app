@@ -10,6 +10,7 @@ import { MenuActions } from '../../store/MenuSlice';
 export const ContentLoader = () => {
   const dispatch = useDispatch();
   const { token, lang } = useContext(AuthContext);
+
   // cart data
   const { data: cart } = useFetchById({
     lang,
@@ -46,5 +47,6 @@ export const ContentLoader = () => {
       dispatch(MenuActions.replaceMenuList(categories));
     }
   }, [dispatch, categories]);
+
   return null;
 };

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Flex, List, Stack } from '@chakra-ui/react';
+import { List, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { OrderItem } from './OrderItem';
@@ -19,9 +19,7 @@ const Orders = () => {
 
   return (
     <Stack maxW="512px" margin="auto" mt={5}>
-      <Flex justify="space-between">
-        <Filter onChange={event => setFilter(+event.target.value)} />
-      </Flex>
+      <Filter onChange={event => setFilter(+event.target.value)} />
       <List>
         {ordersList.map(order => (
           <OrderItem

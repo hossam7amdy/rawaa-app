@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { client } from '../utils/axios-utils';
 import { PATH } from '../data/constants';
@@ -42,33 +42,32 @@ export const useFetchById = ({ key, id, lang }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const request = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await queryFn[key]({ id, lang });
+      setData(response.data);
+    } catch (err) {
+      const message = err?.response?.data?.message || err.message;
+      setError(message);
+
+      toast({
+        title: 'Failed',
+        description: message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [key, id, lang, toast]);
+
   useEffect(() => {
     if (!id) return;
-
-    const request = async () => {
-      setIsLoading(true);
-      try {
-        const response = await queryFn[key]({ id, lang });
-        setData(response.data);
-      } catch (err) {
-        const message = err?.response?.data?.message || err.message;
-        setError(message);
-
-        toast({
-          title: 'Failed',
-          description: message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     request();
-  }, [key, id, lang, toast]);
+  }, [id, request]);
 
   return {
     data,
